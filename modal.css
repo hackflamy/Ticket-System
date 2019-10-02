@@ -1,0 +1,206 @@
+<style>
+/* modal styling*/
+
+a:link,
+a:visited {
+    text-decoration: none;
+}
+
+.modal {
+    background-color: rgba(0, 0, 0, .8);
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.modal-content {
+    width: 75%;
+    height: 65%;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2em;
+    border-radius: 1em;
+    opacity: 0;
+    visibility: hidden;
+}
+
+#modal:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+#modal:target .modal-content {
+    opacity: 1;
+    visibility: visible;
+}
+
+#regcro:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+#regcro:target .modal-content {
+    opacity: 1;
+    visibility: visible;
+}
+
+#isuetick:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+#isuetick:target .modal-content {
+    opacity: 1;
+    visibility: visible;
+}
+
+#view:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+#view:target .modal-content {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-close {
+    color: #212121;
+    font-size: 2em;
+    position: absolute;
+    top: .5em;
+    right: 1em;
+}
+
+.modal-heading {
+    color: #5fa2db;
+    margin-bottom: 1em;
+}
+
+
+/* dumy table styling*/
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.tickets tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.table-heading {
+    text-align: center;
+}
+
+.tbox {
+    border-bottom: 2px solid #adadad;
+    position: relative;
+    margin: 30px 0;
+}
+
+.tbox input {
+    font-size: 15px;
+    font-style: italic;
+    font-weight: bolder;
+    color: #333;
+    border: none;
+    width: 100%;
+    outline: none;
+    background: none;
+    padding: 0 5px;
+    height: 40px;
+    text-align: center;
+}
+
+.tbox span::before {
+    content: attr(data-placeholder);
+    position: absolute;
+    top: 50px;
+    left: 2%;
+    color: #adadad;
+    font-weight: bolder;
+    transform: translateY(-50px);
+    z-index: -1;
+    transition: .5s;
+}
+
+.tbox span::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(120deg, #3498db, #8e44ad);
+    transition: .5s;
+}
+
+.focus+span::before {
+    top: 70%;
+}
+
+.focus+span::after {
+    width: 100%;
+}
+
+.box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.box select {
+    background-color: #0563af;
+    color: white;
+    padding: 12px;
+    width: 250px;
+    border: none;
+    font-size: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+}
+
+.box::before {
+    content: "\f13a";
+    font-family: FontAwesome;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    font-size: 28px;
+    line-height: 45px;
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+}
+
+.box:hover::before {
+    color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.box select option {
+    padding: 30px;
+}
+
+</style>
