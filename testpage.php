@@ -18,11 +18,8 @@
     <a href="#modal"><i class="fa fa-pencil-square-o fa-2x"></i>
     <div class="cont-contactbtn">
         <div class="cont-flip">
-            <div class="front">
-                <a href="#" class="btn btn-white flip">Send Message</a>
-    </div>
-    <div class="back">
-        <a href="#" class="btn btn-white close"></a>
+        
+    <div class="">
         <form action="" class="contact-form">
             <input type="text" class="gutter" placeholder="Ticket Number">
             <input type="text" class="gutter" placeholder="Site">

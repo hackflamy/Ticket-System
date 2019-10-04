@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="sidebar.css">
     <link rel="stylesheet" href="modal.css">
+    <link rel="stylesheet" href="ussueticket.css">
 
 
 
@@ -53,11 +54,11 @@
                     <span class="nav-text">Register Tech</span></a>
                 </li>
                 <li class="has-subnav">
-                    <a href="#"><i class="fa fa-industry fa-2x"></i>
+                    <a href="#regmn"><i class="fa fa-industry fa-2x"></i>
                     <span class="nav-text">Add Mine</span></a>
                 </li>
                 <li class="has-subnav">
-                    <a href="#"><i class="fa fa-bullseye fa-2x"></i>
+                    <a href="#regcp"><i class="fa fa-bullseye fa-2x"></i>
                     <span class="nav-text">Add Check Point</span></a>
                 </li>
 
@@ -72,6 +73,51 @@
     </div>
     <!-- sidebar ends-->
 
+    <!-- Dashbaord -->
+
+    <div class="dashboard">
+        <table class="tickets">
+            <tr>
+                <th>Ticket Number</th>
+                <th>Description</th>
+                <th>Date</th>
+            </tr>
+            <tr>
+                <td>#8263</td>
+                <td>open boomgate</td>
+                <td>2019/08/15</td>
+            </tr>
+            <tr>
+                <td>#8264</td>
+                <td>paper jam</td>
+                <td>2019/08/20</td>
+            </tr>
+            <tr>
+                <td>#8265</td>
+                <td>network disconected</td>
+                <td>2019/08/26</td>
+            </tr>
+            <tr>
+                <td>#8266</td>
+                <td>weight bridge faulty</td>
+                <td>2019/08/30</td>
+            </tr>
+            <tr>
+                <td>#8267</td>
+                <td>intercom not working </td>
+                <td>2019/09/01</td>
+            </tr>
+            <tr>
+                <td>#8268</td>
+                <td>pc updating</td>
+                <td>2019/08/3</td>
+            </tr>
+        </table>
+
+    </div>
+
+    <!-- Dashbaord ends-->
+
     <!-- Dashbaord/View Ticket-->
 
     <div class="modal" id="view">
@@ -79,7 +125,7 @@
             <h2 class="modal-heading">Available Tickets</h2>
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
-                <h2 class="table-heading">CRUD Table</h2>
+                <h2 class="table-heading"></h2>
 
                 <table class="tickets">
                     <tr>
@@ -133,7 +179,7 @@
             <h2 class="modal-heading">Available Tickets</h2>
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
-                <h2 class="table-heading">CRUD Table</h2>
+                <h2 class="table-heading"></h2>
 
                 <table class="tickets">
                     <tr>
@@ -189,53 +235,40 @@
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
                 <h2 class="table-heading">NEW TICKET</h2>
+                <div class="cont-contactbtn">
+                    <div class="cont-flip">
 
-                <table>
-                    <tr>
-                        <td>
-                            <div class="box">
-                                <select>
-                                        <option value="0">SELECT MINE</option>
-                                            <option value="Inyanda">Inyanda</option>
-                                            <option value="TNDB">TNDB</option>
-                                            <option value="Mooifontein">Mooifontein</option>
-                                            <option value="Welegelegen">Welegelegen</option>
-                                          </select>
+                        <div class="">
+                            <form action="" class="contact-form">
+                                <input type="text" class="gutter" placeholder="Ticket Number" readonly>
+                                <select name="Site" class="gutter">
+                                        <option value="">Select Site</option>
+                                        <option value="WB IN 1">Klip25</option>
+                                        <option value="WB IN 2">TNDB</option>
+                                        <option value="EXIT">Mooifontein</option>
+                                        <option value="SECONDARY IN">Inyanda</option>
+                                      </select>
+                                <select name="checkpoints" class="gutter">
+                                    <option value="">Select Checkpoint</option>
+                                    <option value="WB IN 1">WB IN 1</option>
+                                    <option value="WB IN 2">WB IN 2</option>
+                                    <option value="EXIT">EXIT</option>
+                                    <option value="SECONDARY IN">SECONDARY IN</option>
+                                  </select>
+                                <select name="Mine" class="gutter">
+                                    <option value="">Select Technician</option>
+                                    <option value="WB IN 1">Tendani</option>
+                                    <option value="WB IN 2">Ashley</option>
+                                    <option value="EXIT">Charel</option>
+                                    <option value="SECONDARY IN">Danova</option>
+                                  </select>
+                                <textarea name="" id="" placeholder="Comment"></textarea>
+                                <input class="donebtn" type="submit" value="Done">
 
-                            </div>
-                        </td>
-                        <td>
-                            <div class="box">
-                                <select>
-                                            <option value="0">SELECT CHECKPOIN</option>
-                                                <option value="Inyanda">WB OUT</option>
-                                                <option value="TNDB">WB IN</option>
-                                                <option value="Mooifontein">EXIT</option>
-                                                <option value="Welegelegen">ENTRANCE</option>
-                                              </select>
-
-                            </div>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="box">
-                                <textarea name="commect" id="" cols="60" rows="5">Comment</textarea>
-
-                            </div>
-                        </td>
-                        <td>
-                            <div class="box">
-                                <input type="text" name="" id="">
-
-                            </div>
-                        </td>
-
-                    </tr>
-
-
-                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </p>
         </div>
     </div>
@@ -248,48 +281,27 @@
 
     <div class="modal" id="regcro">
         <div class="modal-content">
-            <h2 class="modal-heading">Available Tickets</h2>
+            <h2 class="modal-heading">Register CRO</h2>
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
-                <h2 class="table-heading">CRUD Table</h2>
+                <h2 class="table-heading">CRO Details</h2>
 
-                <table>
-                    <tr>
-                        <th>Ticket Number</th>
-                        <th>Description</th>
+                <div class="cont-contactbtn">
+                    <div class="cont-flip">
 
-                    </tr>
-                    <tr>
-                        <td>#8263</td>
-                        <td>open boomgate</td>
+                        <div class="">
+                            <form action="" class="contact-form">
+                                <input type="text" class="gutter" placeholder="Initials ">
+                                <input type="text" class="gutter" placeholder="Last Name">
+                                <input type="password" class="gutter" placeholder="password">
+                                <input type="password" class="gutter" placeholder="confirm password">
 
-                    </tr>
-                    <tr>
-                        <td>#8264</td>
-                        <td>paper jam</td>
+                                <input class="donebtn" type="submit" value="Done">
 
-                    </tr>
-                    <tr>
-                        <td>#8265</td>
-                        <td>network disconected</td>
-
-                    </tr>
-                    <tr>
-                        <td>#8266</td>
-                        <td>weight bridge faulty</td>
-
-                    </tr>
-                    <tr>
-                        <td>#8267</td>
-                        <td>intercom not working </td>
-
-                    </tr>
-                    <tr>
-                        <td>#8268</td>
-                        <td>pc updating</td>
-
-                    </tr>
-                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </p>
         </div>
     </div>
@@ -298,6 +310,69 @@
 
     <!-- Register  CRO Ends-->
 
+
+    <!-- Add Mine-->
+
+
+
+    <div class="modal" id="regmn">
+        <div class="modal-content">
+            <h2 class="modal-heading">New Mine</h2>
+            <a href="#" class="modal-close">&times;</a>
+            <p class="modal-body">
+                <h2 class="table-heading">Mine Details</h2>
+
+                <div class="cont-contactbtn">
+                    <div class="cont-flip">
+
+                        <div class="">
+                            <form action="" class="contact-form">
+                                <input type="text" class="gutter" placeholder="Mina Name">
+                                <input type="text" class="gutter" placeholder="Abbreviation">
+
+                                <input class="donebtn" type="submit" value="Done">
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Add Mine Ends-->
+    <!-- Add check point-->
+
+
+
+    <div class="modal" id="regcp">
+        <div class="modal-content">
+            <h2 class="modal-heading">New Check Point</h2>
+            <a href="#" class="modal-close">&times;</a>
+            <p class="modal-body">
+                <h2 class="table-heading">Check Point Details</h2>
+
+                <div class="cont-contactbtn">
+                    <div class="cont-flip">
+
+                        <div class="">
+                            <form action="" class="contact-form">
+                                <input type="text" class="gutter" placeholder="Check Point Name">
+                                <input type="text" class="gutter" placeholder="Abbreviation">
+
+                                <input class="donebtn" type="submit" value="Done">
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Add check point Ends-->
     <script type="text/javascript">
         $(".tbox input").on("focus", function() {
             $(this).addClass("focus");
