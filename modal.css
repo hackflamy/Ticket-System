@@ -32,6 +32,18 @@ a:visited {
     visibility: hidden;
 }
 
+.dashboard {
+    background-color: #fff;
+    width: 75%;
+    height: 65%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2em;
+    border-radius: 1em;
+}
+
 #modal:target {
     opacity: 1;
     visibility: visible;
@@ -48,6 +60,26 @@ a:visited {
 }
 
 #regcro:target .modal-content {
+    opacity: 1;
+    visibility: visible;
+}
+
+#regmn:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+#regmn:target .modal-content {
+    opacity: 1;
+    visibility: visible;
+}
+
+#regcp:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+#regcp:target .modal-content {
     opacity: 1;
     visibility: visible;
 }
