@@ -10,15 +10,18 @@ $con=mysqli_connect($host,$user,$pwd,$db);
 $uname=$_SESSION['uname'];
 if(isset($_SESSION['uname'])){
 
-    $sql="SELECT initials,surname FROM tbl_user WHERE username='".$uname."' LIMIT 1";
+    $sql="SELECT initials,surname,role FROM tbl_user WHERE username='".$uname."' LIMIT 1";
 
     $result = mysqli_query($con,$sql); 
     if(mysqli_num_rows($result)==1){
        while($row=mysqli_fetch_row($result)){
            $init=$row[0];
            $lname=$row[1];
+           $usrole=$row[2];
        }
     }
+           
+    
    
 }
 ?>
@@ -45,6 +48,7 @@ if(isset($_SESSION['uname'])){
     <link rel="stylesheet" href="modal.css">
     <link rel="stylesheet" href="ussueticket.css">
     <link rel="stylesheet" href="style.css">
+    
 
 
 
@@ -73,19 +77,19 @@ if(isset($_SESSION['uname'])){
                     <a href="#isuetick"><i class="fa fa-exchange fa-2x"></i>
                     <span class="nav-text">Issue Ticket</span></a>
                 </li>
-                <li class="has-subnav">
+                <li id="regcroli" class="has-subnav">
                     <a href="#regcro"><i class="fa fa-plus-square fa-2x"></i>
                     <span class="nav-text">Register CRO</span></a>
                 </li>
-                <li class="has-subnav">
+                <li id="regtechli" class="has-subnav">
                     <a href="#"><i class="fa fa-plus-square fa-2x"></i>
                     <span class="nav-text">Register Tech</span></a>
                 </li>
-                <li class="has-subnav">
+                <li id="addsiteli" class="has-subnav">
                     <a href="#regmn"><i class="fa fa-industry fa-2x"></i>
                     <span class="nav-text">Add Mine</span></a>
                 </li>
-                <li class="has-subnav">
+                <li id="addcpli" class="has-subnav">
                     <a href="#regcp"><i class="fa fa-bullseye fa-2x"></i>
                     <span class="nav-text">Add Check Point</span></a>
                 </li>
@@ -109,49 +113,57 @@ if(isset($_SESSION['uname'])){
     <!-- Dashbaord -->
 
     <div class="dashboard">
+    <div class="filter">
     <h2> From: <input type="date" class="dateinput" placeholder="Initials ">&nbsp   
     &nbsp     To: <input type="date" class="dateinput" placeholder="Last Name">
-    <input class="searchbtn" type="submit" value="Search"></h2>
-    <input class="printbtn" type="submit" value="Search"></h2>
-
-                           
+    <input class="searchbtn" type="submit" value="Search">
+    <input class="printbtn" type="submit" value=""></h2>
+    </div>
+                     
                 
         <table class="tickets">
             <tr>
                 <th>Ticket Number</th>
-                <th>Description</th>
+                <th>Site</th>
+                <th>Checkpoint</th>
+                <th>Problem</th>
+                <th>Technician</th>
+                <th>issued by</th>
+                <th>Sollution</th>
                 <th>Date</th>
+                
             </tr>
-            <tr>
-                <td>#8263</td>
-                <td>open boomgate</td>
-                <td>2019/08/15</td>
-            </tr>
-            <tr>
-                <td>#8264</td>
-                <td>paper jam</td>
-                <td>2019/08/20</td>
-            </tr>
-            <tr>
-                <td>#8265</td>
-                <td>network disconected</td>
-                <td>2019/08/26</td>
-            </tr>
-            <tr>
-                <td>#8266</td>
-                <td>weight bridge faulty</td>
-                <td>2019/08/30</td>
-            </tr>
-            <tr>
-                <td>#8267</td>
-                <td>intercom not working </td>
-                <td>2019/09/01</td>
-            </tr>
-            <tr>
-                <td>#8268</td>
-                <td>pc updating</td>
-                <td>2019/08/3</td>
-            </tr>
+<?php
+
+
+$sql2="SELECT * FROM tbl_ticket ";
+$result2 = mysqli_query($con,$sql2); 
+
+   while($row2=mysqli_fetch_row($result2)){
+       $tno=$row2[0];
+       $site=$row2[1];
+       $cp=$row2[2];
+       $prob=$row2[3];
+       $tech=$row2[4];
+       $cro=$row2[5];
+       $solution=$row2[6];
+       $date=$row2[7];
+       echo "    <tr>
+       <td>$tno</td>
+       <td>$site</td>
+       <td>$cp</td>
+       <td>$prob</td>
+       <td>$tech</td>
+       <td>$cro</td>
+       <td>$solution</td>
+       <td>$date</td>
+       
+   </tr>";
+
+
+   }
+      
+            ?>
         </table>
 
     </div>
@@ -162,10 +174,10 @@ if(isset($_SESSION['uname'])){
 
     <div class="modal" id="view">
         <div class="modal-content">
-            <h2 class="modal-heading">Available Tickets</h2>
+            
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
-                <h2 class="table-heading"></h2>
+                <h2 class="table-heading">Available Tickets</h2>
 
                 <table class="tickets">
                     <tr>
@@ -230,17 +242,17 @@ if(isset($_SESSION['uname'])){
                     <tr>
                         <td>#8263</td>
                         <td>open boomgate</td>
-                        <td><input type="submit" class="loginbtn" value="Edit"><input type="submit" class="loginbtn" value="Delete"></td>
+                        <td><input type="submit" class="searchbtn" value="Edit"><input type="submit" class="loginbtn" value="Delete"></td>
                     </tr>
                     <tr>
                         <td>#8264</td>
                         <td>paper jam</td>
-                        <td><input type="submit" class="loginbtn" value="Edit"><input type="submit" class="loginbtn" value="Delete"></td>
+                        <td><input type="submit" class="searchbtn" value="Edit"><input type="submit" class="loginbtn" value="Delete"></td>
                     </tr>
                     <tr>
                         <td>#8265</td>
                         <td>network disconected</td>
-                        <td><input type="submit" class="loginbtn" value="Edit"><input type="submit" class="loginbtn" value="Delete"></td>
+                        <td><input type="submit" class="searchbtn" value="Edit"><input type="submit" class="loginbtn" value="Delete"></td>
                     </tr>
                     <tr>
                         <td>#8266</td>
@@ -421,6 +433,24 @@ if(isset($_SESSION['uname'])){
             if ($(this).val() == "")
                 $(this).removeClass("focus")
         });
+
+        window.onload = setMenu;
+function setMenu() {
+    var urole='<?php echo $usrole;?>';
+    if(urole=="CRO"){
+        var elmnt = document.getElementById("regcroli");
+  elmnt.remove();
+  var elmnt2 = document.getElementById("regtechli");
+  elmnt2.remove();
+  var elmnt3 = document.getElementById("addsiteli");
+  elmnt3.remove();
+  var elmnt4 = document.getElementById("addcpli");
+  elmnt4.remove();
+    }
+
+}
+
+
     </script>
 </body>
 

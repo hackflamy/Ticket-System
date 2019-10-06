@@ -15,25 +15,52 @@
 </head>
 
 <body>
-    <a href="#modal"><i class="fa fa-pencil-square-o fa-2x"></i>
-    <div class="cont-contactbtn">
-        <div class="cont-flip">
-        <h2> From: <input type="date" class="dateinput" placeholder="Initials ">&nbsp   
-    &nbsp     To: <input type="date" class="dateinput" placeholder="Last Name">
-    <input class="" type="submit" value="Done"></h2>
-    <div class="">
-        <form action="" class="contact-form">
-            <input type="text" class="gutter" placeholder="Ticket Number">
-            <input type="text" class="gutter" placeholder="Site">
-            <input type="text" class="gutter" placeholder="Checkpoint">
-            <input type="text" class="gutter" placeholder="Technician">
-            <textarea name="" id="" placeholder="Comment"></textarea>
-            <input type="submit" value="Done">
 
-        </form>
+<div class="modal" id="isuetick">
+        <div class="modal-content">
+
+            <a href="#" class="modal-close">&times;</a>
+            <p class="modal-body">
+                <h2 class="table-heading">NEW TICKET</h2>
+                <div class="cont-contactbtn">
+                    <div class="cont-flip">
+
+                        <div class="">
+                            <form action="" class="contact-form">
+                                <input type="text" class="gutter" placeholder="Ticket Number" readonly>
+                                <select name="Site" class="gutter">
+                                        <option value="">Select Site</option>
+                                        <option value="WB IN 1">Klip25</option>
+                                        <option value="WB IN 2">TNDB</option>
+                                        <option value="EXIT">Mooifontein</option>
+                                        <option value="SECONDARY IN">Inyanda</option>
+                                      </select>
+                                <select name="checkpoints" class="gutter">
+                                    <option value="">Select Checkpoint</option>
+                                    <option value="WB IN 1">WB IN 1</option>
+                                    <option value="WB IN 2">WB IN 2</option>
+                                    <option value="EXIT">EXIT</option>
+                                    <option value="SECONDARY IN">SECONDARY IN</option>
+                                  </select>
+                                <select name="Mine" class="gutter">
+                                    <option value="">Select Technician</option>
+                                    <option value="WB IN 1">Tendani</option>
+                                    <option value="WB IN 2">Ashley</option>
+                                    <option value="EXIT">Charel</option>
+                                    <option value="SECONDARY IN">Danova</option>
+                                  </select>
+                                <textarea name="" id="" placeholder="Comment"></textarea>
+                                <input class="donebtn" type="submit" value="Done">
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </p>
+        </div>
     </div>
-    </div>
-    </div>
+
+                       
 
     <script src="" async defer></script>
 </body>
