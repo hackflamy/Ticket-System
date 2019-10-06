@@ -18,7 +18,9 @@
     <a href="#modal"><i class="fa fa-pencil-square-o fa-2x"></i>
     <div class="cont-contactbtn">
         <div class="cont-flip">
-        
+        <h2> From: <input type="date" class="dateinput" placeholder="Initials ">&nbsp   
+    &nbsp     To: <input type="date" class="dateinput" placeholder="Last Name">
+    <input class="" type="submit" value="Done"></h2>
     <div class="">
         <form action="" class="contact-form">
             <input type="text" class="gutter" placeholder="Ticket Number">

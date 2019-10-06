@@ -65,6 +65,15 @@ a {
     margin-right: 0.8%;
 }
 
+.dateinput {
+    float: left;
+    margin-bottom: 8px;
+    padding-left: 3%;
+    width: 44.9%;
+    border-radius: 20px;
+    margin-right: 0.8%;
+}
+
 .cont-contactbtn .contact-form textarea {
     height: 105px;
     padding-left: 3%;
@@ -77,4 +86,16 @@ a {
     display: block;
     height: 19px;
     background-repeat: no-repeat;
+}
+
+input[type="date"] {
+    float: left;
+    margin-bottom: 8px;
+    padding-left: 3%;
+    width: 48%;
+    border-radius: 20px;
+    border: 1px solid #808080;
+    font-size: 12px;
+    padding: 10px 0;
+    text-transform: uppercase;
 }

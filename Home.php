@@ -1,3 +1,29 @@
+<?php
+
+$host ="localhost";
+$user= "root";
+$pwd="";
+$db="ticketsystem";
+
+session_start();
+$con=mysqli_connect($host,$user,$pwd,$db);
+$uname=$_SESSION['uname'];
+if(isset($_SESSION['uname'])){
+
+    $sql="SELECT initials,surname FROM tbl_user WHERE username='".$uname."' LIMIT 1";
+
+    $result = mysqli_query($con,$sql); 
+    if(mysqli_num_rows($result)==1){
+       while($row=mysqli_fetch_row($result)){
+           $init=$row[0];
+           $lname=$row[1];
+       }
+    }
+   
+}
+?>
+
+
 <!DOCTYPE html>
 
 <html class="no-js">
@@ -18,12 +44,14 @@
     <link rel="stylesheet" href="sidebar.css">
     <link rel="stylesheet" href="modal.css">
     <link rel="stylesheet" href="ussueticket.css">
+    <link rel="stylesheet" href="style.css">
 
 
 
 </head>
 
 <body>
+<form method="POST" action="#" >
     <!-- sidebar-->
     <div class="area">
 
@@ -65,8 +93,13 @@
             </ul>
 
             <ul class="logout">
+            <li>
+                <a href="#"><i class="fa fa-user-o fa-2x"></i> 
+                    <span class="nav-text"><?php echo $init." ".$lname;  ?></span></a>
+                </li>
                 <li>
-                    <a href="#"><i class="fa fa-power-off fa-2x"></i> <span class="nav-text">Logout</span></a>
+                
+                <a href="logout.php" name="logout"><i class="fa fa-power-off fa-2x"></i> <span class="nav-text">Logout</span></a>
                 </li>
             </ul>
         </nav>
@@ -76,6 +109,13 @@
     <!-- Dashbaord -->
 
     <div class="dashboard">
+    <h2> From: <input type="date" class="dateinput" placeholder="Initials ">&nbsp   
+    &nbsp     To: <input type="date" class="dateinput" placeholder="Last Name">
+    <input class="searchbtn" type="submit" value="Search"></h2>
+    <input class="printbtn" type="submit" value="Search"></h2>
+
+                           
+                
         <table class="tickets">
             <tr>
                 <th>Ticket Number</th>
@@ -370,7 +410,7 @@
             </p>
         </div>
     </div>
-
+    </form>
 
     <!-- Add check point Ends-->
     <script type="text/javascript">

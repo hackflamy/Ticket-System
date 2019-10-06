@@ -1,3 +1,44 @@
+<?php
+$host ="localhost";
+$user= "root";
+$pwd="";
+$db="ticketsystem";
+
+session_start();
+ if(isset($_SESSION['uname']))
+{
+    echo "<script>location.href='Home.php'</script>";
+}
+else{
+
+
+$con=mysqli_connect($host,$user,$pwd,$db);
+
+if (mysqli_connect_errno())
+  {
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  }
+
+if(isset($_POST['username'])){
+    $uname=$_POST['username'];
+    $pword=$_POST['password'];
+    $sql="SELECT * FROM tbl_user WHERE username='".$uname."' AND password='".$pword."' LIMIT 1";
+
+    $result = mysqli_query($con,$sql); 
+    if(mysqli_num_rows($result)==1){
+        $_SESSION['uname']=$uname;
+        echo "<script>location.href='Home.php'</script>";
+    }
+    else{
+        echo "you have enter incorect details";
+        exit;
+    }
+
+}
+}
+?>
+
+
 <!DOCTYPE html>
 
 <!--[if gt IE 8]><!-->
@@ -17,15 +58,15 @@
 
 <body>
 
-    <form action="index.html" class="login-form">
+    <form method="POST" action="#" class="login-form">
         <h1>LOGIN</h1>
         <div class="tbox">
-            <input type="text" name="" id="">
+            <input type="text" name="username" id="">
             <span data-placeholder="USERNAME"></span>
         </div>
 
         <div class="tbox">
-            <input type="password" name="" id="">
+            <input type="password" name="password" id="">
             <span data-placeholder="PASSWORD"></span>
         </div>
         <input type="submit" class="loginbtn" value="login">
