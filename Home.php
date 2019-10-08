@@ -78,7 +78,7 @@ if(isset($_SESSION['uname'])){
                     <span class="nav-text">Issue Ticket</span></a>
                 </li>
                 <li id="regcroli" class="has-subnav">
-                    <a href="#regcro"><i class="fa fa-user-pplus fa-2x"></i>
+                    <a href="#regcro"><i class="fa fa-user-plus fa-2x"></i>
                     <span class="nav-text">Register CRO</span></a>
                 </li>
                 <li id="regtechli" class="has-subnav">
