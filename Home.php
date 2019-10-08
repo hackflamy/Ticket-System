@@ -67,7 +67,7 @@ if(isset($_SESSION['uname'])){
                 </li>
                 <li class="has-subnav">
                     <a href="#view"><i class="fa fa-list-alt fa-2x"></i>
-                    <span class="nav-text">View Ticket</span></a>
+                    <span class="nav-text">All Tickets</span></a>
                 </li>
                 <li class="has-subnav">
                     <a href="#modal"><i class="fa fa-pencil-square-o fa-2x"></i>
@@ -180,7 +180,7 @@ $result2 = mysqli_query($con,$sql2);
             
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
-                <h2 class="table-heading">Available Tickets</h2>
+                <h2 class="table-heading">All Tickets</h2>
 
                 <table class="tickets">
             <tr>
