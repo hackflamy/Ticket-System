@@ -1,4 +1,7 @@
 <?php
+require_once('Assets/OO_Class.php');
+
+
 
 $host ="localhost";
 $user= "root";
@@ -24,6 +27,7 @@ if(isset($_SESSION['uname'])){
     
    
 }
+$Ticket = new ASSIGN_TECH();
 ?>
 
 
@@ -310,7 +314,8 @@ $result2 = mysqli_query($con,$sql2);
 
                         <div class="">
                             <form action="" class="contact-form">
-                                <input type="text" class="gutter" placeholder="Ticket Number" readonly>
+                                <input type="text" class="gutter" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number" readonly>
+                                
                                 <select name="Site" class="gutter">
                                         <option value="">Select Site</option>
                                         <option value="WB IN 1">Klip25</option>
