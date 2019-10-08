@@ -78,7 +78,7 @@ if(isset($_SESSION['uname'])){
                     <span class="nav-text">Issue Ticket</span></a>
                 </li>
                 <li id="regcroli" class="has-subnav">
-                    <a href="#regcro"><i class="fa fa-plus-square fa-2x"></i>
+                    <a href="#regcro"><i class="fa fa-user-pplus fa-2x"></i>
                     <span class="nav-text">Register CRO</span></a>
                 </li>
                 <li id="regtechli" class="has-subnav">
@@ -93,7 +93,10 @@ if(isset($_SESSION['uname'])){
                     <a href="#regcp"><i class="fa fa-bullseye fa-2x"></i>
                     <span class="nav-text">Add Check Point</span></a>
                 </li>
-
+                <li id="eduser" class="has-subnav">
+                    <a href="#edituser"><i class="fa fa-users fa-2x"></i>
+                    <span class="nav-text">User</span></a>
+                </li>
             </ul>
 
             <ul class="logout">
@@ -112,12 +115,12 @@ if(isset($_SESSION['uname'])){
 
     <!-- Dashbaord -->
 
-    <div class="dashboard">
+    <div class="contentholder">
     <div class="filter">
     <h2> From: <input type="date" class="dateinput" placeholder="Initials ">&nbsp   
     &nbsp     To: <input type="date" class="dateinput" placeholder="Last Name">
     <input class="searchbtn" type="submit" value="Search">
-    <input class="printbtn" type="submit" value=""></h2>
+    <input class="printbtn" type="submit" value=""> </h2>
     </div>
                      
                 
@@ -180,42 +183,49 @@ $result2 = mysqli_query($con,$sql2);
                 <h2 class="table-heading">Available Tickets</h2>
 
                 <table class="tickets">
-                    <tr>
-                        <th>Ticket Number</th>
-                        <th>Description</th>
-                        <th>Date</th>
-                    </tr>
-                    <tr>
-                        <td>#8263</td>
-                        <td>open boomgate</td>
-                        <td>2019/08/15</td>
-                    </tr>
-                    <tr>
-                        <td>#8264</td>
-                        <td>paper jam</td>
-                        <td>2019/08/20</td>
-                    </tr>
-                    <tr>
-                        <td>#8265</td>
-                        <td>network disconected</td>
-                        <td>2019/08/26</td>
-                    </tr>
-                    <tr>
-                        <td>#8266</td>
-                        <td>weight bridge faulty</td>
-                        <td>2019/08/30</td>
-                    </tr>
-                    <tr>
-                        <td>#8267</td>
-                        <td>intercom not working </td>
-                        <td>2019/09/01</td>
-                    </tr>
-                    <tr>
-                        <td>#8268</td>
-                        <td>pc updating</td>
-                        <td>2019/08/3</td>
-                    </tr>
-                </table>
+            <tr>
+                <th>Ticket Number</th>
+                <th>Site</th>
+                <th>Checkpoint</th>
+                <th>Problem</th>
+                <th>Technician</th>
+                <th>issued by</th>
+                <th>Sollution</th>
+                <th>Date</th>
+                
+            </tr>
+<?php
+
+
+$sql2="SELECT * FROM tbl_ticket ";
+$result2 = mysqli_query($con,$sql2); 
+
+   while($row2=mysqli_fetch_row($result2)){
+       $tno=$row2[0];
+       $site=$row2[1];
+       $cp=$row2[2];
+       $prob=$row2[3];
+       $tech=$row2[4];
+       $cro=$row2[5];
+       $solution=$row2[6];
+       $date=$row2[7];
+       echo "    <tr>
+       <td>$tno</td>
+       <td>$site</td>
+       <td>$cp</td>
+       <td>$prob</td>
+       <td>$tech</td>
+       <td>$cro</td>
+       <td>$solution</td>
+       <td>$date</td>
+       
+   </tr>";
+
+
+   }
+      
+            ?>
+        </table>
             </p>
         </div>
     </div>
@@ -227,49 +237,57 @@ $result2 = mysqli_query($con,$sql2);
 
     <!-- update Ticket-->
     <div class="modal" id="modal">
-        <div class="modal-content">
-            <h2 class="modal-heading">Available Tickets</h2>
+    <div class="modal-content">
+            
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
-                <h2 class="table-heading"></h2>
+                <h2 class="table-heading">Available Tickets</h2>
 
                 <table class="tickets">
-                    <tr>
-                        <th>Ticket Number</th>
-                        <th>Description</th>
-                        <th></th>
-                    </tr>
-                    <tr>
-                        <td>#8263</td>
-                        <td>open boomgate</td>
-                        <td><input type="submit" class="searchbtn" value="Edit"><input type="submit" class="loginbtn" value="Delete"></td>
-                    </tr>
-                    <tr>
-                        <td>#8264</td>
-                        <td>paper jam</td>
-                        <td><input type="submit" class="searchbtn" value="Edit"><input type="submit" class="loginbtn" value="Delete"></td>
-                    </tr>
-                    <tr>
-                        <td>#8265</td>
-                        <td>network disconected</td>
-                        <td><input type="submit" class="searchbtn" value="Edit"><input type="submit" class="loginbtn" value="Delete"></td>
-                    </tr>
-                    <tr>
-                        <td>#8266</td>
-                        <td>weight bridge faulty</td>
-                        <td><input type="submit" class="loginbtn" value="Edit"><input type="submit" class="loginbtn" value="Delete"></td>
-                    </tr>
-                    <tr>
-                        <td>#8267</td>
-                        <td>intercom not working </td>
-                        <td><input type="submit" class="loginbtn" value="Edit"><input type="submit" class="loginbtn" value="Delete"></td>
-                    </tr>
-                    <tr>
-                        <td>#8268</td>
-                        <td>pc updating</td>
-                        <td><input type="submit" class="loginbtn" value="Edit"><input type="submit" class="loginbtn" value="Delete"></td>
-                    </tr>
-                </table>
+            <tr>
+                <th>Ticket Number</th>
+                <th>Site</th>
+                <th>Checkpoint</th>
+                <th>Problem</th>
+                <th>Technician</th>
+                <th>issued by</th>
+                <th>Sollution</th>
+                <th>Date</th>
+                
+            </tr>
+<?php
+
+
+$sql2="SELECT * FROM tbl_ticket ";
+$result2 = mysqli_query($con,$sql2); 
+
+   while($row2=mysqli_fetch_row($result2)){
+       $tno=$row2[0];
+       $site=$row2[1];
+       $cp=$row2[2];
+       $prob=$row2[3];
+       $tech=$row2[4];
+       $cro=$row2[5];
+       $solution=$row2[6];
+       $date=$row2[7];
+       echo "    <tr>
+       <td>$tno</td>
+       <td>$site</td>
+       <td>$cp</td>
+       <td>$prob</td>
+       <td>$tech</td>
+       <td>$cro</td>
+       <td>$solution</td>
+       <td>$date</td>
+       <td><input type='submit' class='editbtn' value='Edit'><input type='submit' class='delbtn' value='Delete'></td>
+       
+   </tr>";
+
+
+   }
+      
+            ?>
+        </table>
             </p>
         </div>
     </div>
@@ -314,7 +332,8 @@ $result2 = mysqli_query($con,$sql2);
                                     <option value="EXIT">Charel</option>
                                     <option value="SECONDARY IN">Danova</option>
                                   </select>
-                                <textarea name="" id="" placeholder="Comment"></textarea>
+                                <textarea name="" id="" placeholder="Problem"></textarea>
+                                <textarea name="" id="" placeholder="Solution"></textarea>
                                 <input class="donebtn" type="submit" value="Done">
 
                             </form>
@@ -425,6 +444,58 @@ $result2 = mysqli_query($con,$sql2);
     </form>
 
     <!-- Add check point Ends-->
+
+     <!-- Edit User-->
+     <div class="modal" id="edituser">
+    <div class="modal-content">
+   
+            <a href="#" class="modal-close">&times;</a>
+            <p class="modal-body">
+                <h2 class="table-heading">All Users</h2>
+
+                <table class="tickets">
+            <tr>
+                <th>username</th>
+                <th>initials</th>
+                <th>surname</th>
+                <th>password</th>
+                
+            
+            </tr>
+<?php
+
+
+$sql2="SELECT * FROM tbl_user ";
+$result2 = mysqli_query($con,$sql2); 
+
+   while($row2=mysqli_fetch_row($result2)){
+       $uname=$row2[0];
+       $init=$row2[1];
+       $sname=$row2[2];
+       $pwd=$row2[3];
+       
+       echo "    <tr>
+       <td>$uname</td>
+       <td>$init</td>
+       <td>$sname</td>
+       <td>$pwd</td>
+       <td><input type='submit' class='editbtn' value='Edit'><input type='submit' class='delbtn' value='Delete'></td>
+       
+   </tr>";
+
+
+   }
+      
+            ?>
+        </table>
+            </p>
+        </div>
+    </div>
+
+
+
+
+    <!-- Edit user-->
     <script type="text/javascript">
         $(".tbox input").on("focus", function() {
             $(this).addClass("focus");
@@ -445,6 +516,8 @@ function setMenu() {
   var elmnt3 = document.getElementById("addsiteli");
   elmnt3.remove();
   var elmnt4 = document.getElementById("addcpli");
+  elmnt4.remove();
+  var elmnt4 = document.getElementById("eduser");
   elmnt4.remove();
     }
 
