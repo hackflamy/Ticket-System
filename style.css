@@ -164,6 +164,16 @@ select {
     margin-right: 0.8%;
     text-align: center;
 }
+.ticketinput{
+    margin-bottom: 8px;
+    padding-left: 3%;
+    width: 10%;
+    border-radius: 20px;
+    border: 2px solid grey;
+    font-size: 12px;
+    padding: 10px 0;
+    text-transform: uppercase;
+}
 
 input[type="text"] {
     text-align: center;
@@ -177,6 +187,7 @@ input[type="text"] {
     padding: 10px 0;
     text-transform: uppercase;
 }
+
 
 .donebtn {
     display: block;
@@ -203,3 +214,4 @@ input[type="text"] {
     padding: 2em;
     border-radius: 1em;
 }
+

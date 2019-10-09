@@ -189,7 +189,11 @@ $result2 = mysqli_query($con,$sql2);
 
     <div class="modal" id="view">
         <div class="modal-content">
-            
+        <div class="filter">
+    <h2> Ticket Number: <input type="text" class="ticketinput" value="" placeholder="Ticket Number" readonly>&nbsp   
+    <input class="searchbtn" type="submit" value="Search">
+    <input class="printbtn" type="submit" value=""> </h2>
+    </div>
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
                 <h2 class="table-heading">All Tickets</h2>
