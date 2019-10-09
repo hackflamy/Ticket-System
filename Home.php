@@ -190,7 +190,7 @@ $result2 = mysqli_query($con,$sql2);
     <div class="modal" id="view">
         <div class="modal-content">
         <div class="filter">
-    <h2> Ticket Number: <input type="text" class="ticketinput" value="" placeholder="Ticket Number" readonly>&nbsp   
+    <h2> <input type="textarea" class="ticketinput" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number" >&nbsp   
     <input class="searchbtn" type="submit" value="Search">
     <input class="printbtn" type="submit" value=""> </h2>
     </div>
@@ -295,7 +295,7 @@ $result2 = mysqli_query($con,$sql2);
        <td>$cro</td>
        <td>$solution</td>
        <td>$date</td>
-       <td><input type='submit' class='editbtn' value='Edit'><input type='submit' class='delbtn' value='Delete'></td>
+       <td><input type='submit' class='ticketeditbtn' value='Edit'></td>
        
    </tr>";
 
