@@ -70,8 +70,16 @@ $Ticket = new ASSIGN_TECH();
                     <span class="nav-text">Deshboard</span></a>
                 </li>
                 <li class="has-subnav">
-                    <a href="#view"><i class="fa fa-list-alt fa-2x"></i>
+                    <a href="#view"><i class="fa fa-ticket fa-2x"></i>
                     <span class="nav-text">All Tickets</span></a>
+                </li>
+                <li class="has-subnav">
+                    <a href="#view"><i class="fa fa-circle-o-notch fa-2x"></i>
+                    <span class="nav-text">Open Tickets</span></a>
+                </li>
+                <li class="has-subnav">
+                    <a href="#view"><i class="fa fa-check fa-2x"></i>
+                    <span class="nav-text">Closed Tickets</span></a>
                 </li>
                 <li class="has-subnav">
                     <a href="#modal"><i class="fa fa-pencil-square-o fa-2x"></i>
