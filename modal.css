@@ -87,6 +87,16 @@ a:visited {
     visibility: visible;
 }
 
+#regtech:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+#regtech:target .modal-content {
+    opacity: 1;
+    visibility: visible;
+}
+
 #regcp:target {
     opacity: 1;
     visibility: visible;
@@ -123,6 +133,26 @@ a:visited {
 }
 
 #edituser:target .modal-content {
+    opacity: 1;
+    visibility: visible;
+}
+
+#opentick:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+#opentick:target .modal-content {
+    opacity: 1;
+    visibility: visible;
+}
+
+#closetick:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+#closetick:target .modal-content {
     opacity: 1;
     visibility: visible;
 }

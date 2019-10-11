@@ -1,5 +1,10 @@
 <?php
 require_once('Assets/OO_Class.php');
+session_start();
+ if(!isset($_SESSION['uname']))
+{
+    echo "<script>location.href='index.php'</script>";
+}
 
 
 
@@ -8,7 +13,7 @@ $user= "root";
 $pwd="";
 $db="ticketsystem";
 
-session_start();
+
 $con=mysqli_connect($host,$user,$pwd,$db);
 $uname=$_SESSION['uname'];
 if(isset($_SESSION['uname'])){
@@ -74,11 +79,11 @@ $Ticket = new ASSIGN_TECH();
                     <span class="nav-text">All Tickets</span></a>
                 </li>
                 <li class="has-subnav">
-                    <a href="#view"><i class="fa fa-circle-o-notch fa-2x"></i>
+                    <a href="#opentick"><i class="fa fa-circle-o-notch fa-2x"></i>
                     <span class="nav-text">Open Tickets</span></a>
                 </li>
                 <li class="has-subnav">
-                    <a href="#view"><i class="fa fa-check fa-2x"></i>
+                    <a href="#closetick"><i class="fa fa-check fa-2x"></i>
                     <span class="nav-text">Closed Tickets</span></a>
                 </li>
                 <li class="has-subnav">
@@ -94,7 +99,7 @@ $Ticket = new ASSIGN_TECH();
                     <span class="nav-text">Register CRO</span></a>
                 </li>
                 <li id="regtechli" class="has-subnav">
-                    <a href="#"><i class="fa fa-plus-square fa-2x"></i>
+                    <a href="#regtech"><i class="fa fa-plus-square fa-2x"></i>
                     <span class="nav-text">Register Tech</span></a>
                 </li>
                 <li id="addsiteli" class="has-subnav">
@@ -190,7 +195,7 @@ $result2 = mysqli_query($con,$sql2);
     <div class="modal" id="view">
         <div class="modal-content">
         <div class="filter">
-    <h2> <input type="textarea" class="ticketinput" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number" >&nbsp   
+    <h2> <input type="textarea" class="ticketinput" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number, Technician, Site, Check point" >&nbsp   
     <input class="searchbtn" type="submit" value="Search">
     <input class="printbtn" type="submit" value=""> </h2>
     </div>
@@ -249,7 +254,187 @@ $result2 = mysqli_query($con,$sql2);
 
 
     <!-- Dashbaord/View Ticket ends-->
+         <!-- Edit User-->
+         <div class="modal" id="edituser">
+    <div class="modal-content">
+   
+            <a href="#" class="modal-close">&times;</a>
+            <p class="modal-body">
+                <h2 class="table-heading">Manage Users</h2>
+                <h2 class="table-heading"><?php if(isset($_SESSION['message'])){echo $_SESSION['message'];}?></h2>
+                
+                <table class="tickets">
+            <tr>
+                <th>username</th>
+                <th>initials</th>
+                <th>surname</th>
+                <th>password</th>
+                
+            
+            </tr>
+<?php
 
+
+$sql2="SELECT * FROM tbl_user ";
+$result2 = mysqli_query($con,$sql2); 
+
+   while($row2=mysqli_fetch_row($result2)){
+       $uname=$row2[0];
+       $init=$row2[1];
+       $sname=$row2[2];
+       $pwd=$row2[3];
+       ?>
+        <tr>
+       <td><?php echo $uname;?></td>
+       <td><?php echo $init;?></td>
+       <td><?php echo $sname;?></td>
+       <td><?php echo $pwd;?></td>
+       <td><input type='submit' class='editbtn' value='Edit'>  <a href="crudprocess.php?delete=<?php echo $uname;?>" class="delbtn">Delete</a> </td>
+       
+   </tr>
+
+   <?php  }?>
+  
+      
+           
+        </table>
+            </p>
+        </div>
+    </div>
+
+
+
+
+    <!-- Edit user-->
+
+     <!-- open tecket-->
+
+     <div class="modal" id="opentick">
+        <div class="modal-content">
+        <div class="filter">
+    <h2> <input type="textarea" class="ticketinput" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number, Technician, Site, Check point" >&nbsp   
+    <input class="searchbtn" type="submit" value="Search">
+    <input class="printbtn" type="submit" value=""> </h2>
+    </div>
+            <a href="#" class="modal-close">&times;</a>
+            <p class="modal-body">
+                <h2 class="table-heading">All Tickets</h2>
+
+                <table class="tickets">
+            <tr>
+                <th>Ticket Number</th>
+                <th>Site</th>
+                <th>Checkpoint</th>
+                <th>Problem</th>
+                <th>Technician</th>
+                <th>issued by</th>
+                <th>Sollution</th>
+                <th>Date</th>
+                
+            </tr>
+<?php
+
+
+$sql2="SELECT * FROM tbl_ticket WHERE accessibility='open' ";
+$result2 = mysqli_query($con,$sql2); 
+
+   while($row2=mysqli_fetch_row($result2)){
+       $tno=$row2[0];
+       $site=$row2[1];
+       $cp=$row2[2];
+       $prob=$row2[3];
+       $tech=$row2[4];
+       $cro=$row2[5];
+       $solution=$row2[6];
+       $date=$row2[7];
+       echo "    <tr>
+       <td>$tno</td>
+       <td>$site</td>
+       <td>$cp</td>
+       <td>$prob</td>
+       <td>$tech</td>
+       <td>$cro</td>
+       <td>$solution</td>
+       <td>$date</td>
+       
+   </tr>";
+
+
+   }
+      
+            ?>
+        </table>
+            </p>
+        </div>
+    </div>
+
+
+
+    <!-- open ticket ends-->
+     <!-- close ticket-->
+
+     <div class="modal" id="closetick">
+        <div class="modal-content">
+        <div class="filter">
+    <h2> <input type="textarea" class="ticketinput" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number, Technician, Site, Check point" >&nbsp   
+    <input class="searchbtn" type="submit" value="Search">
+    <input class="printbtn" type="submit" value=""> </h2>
+    </div>
+            <a href="#" class="modal-close">&times;</a>
+            <p class="modal-body">
+                <h2 class="table-heading">All Tickets</h2>
+
+                <table class="tickets">
+            <tr>
+                <th>Ticket Number</th>
+                <th>Site</th>
+                <th>Checkpoint</th>
+                <th>Problem</th>
+                <th>Technician</th>
+                <th>issued by</th>
+                <th>Sollution</th>
+                <th>Date</th>
+                
+            </tr>
+<?php
+
+
+$sql2="SELECT * FROM tbl_ticket WHERE accessibility='closed' ";
+$result2 = mysqli_query($con,$sql2); 
+
+   while($row2=mysqli_fetch_row($result2)){
+       $tno=$row2[0];
+       $site=$row2[1];
+       $cp=$row2[2];
+       $prob=$row2[3];
+       $tech=$row2[4];
+       $cro=$row2[5];
+       $solution=$row2[6];
+       $date=$row2[7];
+       echo "    <tr>
+       <td>$tno</td>
+       <td>$site</td>
+       <td>$cp</td>
+       <td>$prob</td>
+       <td>$tech</td>
+       <td>$cro</td>
+       <td>$solution</td>
+       <td>$date</td>
+       
+   </tr>";
+
+
+   }
+      
+            ?>
+        </table>
+            </p>
+        </div>
+    </div>
+
+
+
+    <!-- close tecket ends-->
 
     <!-- update Ticket-->
     <div class="modal" id="modal">
@@ -369,22 +554,53 @@ $result2 = mysqli_query($con,$sql2);
 
     <div class="modal" id="regcro">
         <div class="modal-content">
-            <h2 class="modal-heading">Register CRO</h2>
+            
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
-                <h2 class="table-heading">CRO Details</h2>
+                <h2 class="table-heading">New CRO</h2>
 
                 <div class="cont-contactbtn">
                     <div class="cont-flip">
 
                         <div class="">
-                            <form action="" class="contact-form">
-                                <input type="text" class="gutter" placeholder="Initials ">
-                                <input type="text" class="gutter" placeholder="Last Name">
-                                <input type="password" class="gutter" placeholder="password">
-                                <input type="password" class="gutter" placeholder="confirm password">
+                            <form method="POST" action="#regcro" class="contact-form">
+                                <input type="text" name="crousername" class="gutter" placeholder="username ">
+                                <input type="text" name="croinitials" class="gutter" placeholder="Initials ">
+                                <input type="text" name="crolastname" class="gutter" placeholder="Last Name">
+                                <input type="password" name="cropwd" class="gutter" placeholder="password">
+                                <input type="password" name="crocpwd" class="gutter" placeholder="confirm password">
 
-                                <input class="donebtn" type="submit" value="Done">
+                                <input class="donebtn" type="submit" name="regcrobtn" value="Done">
+                                <?php
+                                    if(isset($_POST['regcrobtn']))
+                                    {
+                                        $crouname=$_POST['crousername'];
+                                        $croinit=$_POST['croinitials'];
+                                        $crolname=$_POST['crolastname'];
+                                        $cropwd=$_POST['cropwd'];
+                                        $crorole='CRO';
+
+                                        $sqlregcro="INSERT INTO tbl_user (username,initials,surname,password,role) VALUES('$crouname','$croinit','$crolname','$cropwd','$crorole') ";
+
+                                        if(mysqli_query($con,$sqlregcro)){
+                                            echo "USER WAS REGISTERED ";
+
+                                        }
+                                        else{
+                                            echo mysqli_error($con);
+                                        }
+                                        mysqli_close($con);
+                    
+
+
+                                    }
+
+                                   
+
+                
+
+                    
+                                ?>
 
                             </form>
                         </div>
@@ -397,6 +613,69 @@ $result2 = mysqli_query($con,$sql2);
 
 
     <!-- Register  CRO Ends-->
+    <!-- Register  Tech-->
+
+    <div class="modal" id="regtech">
+        <div class="modal-content">
+            
+            <a href="#" class="modal-close">&times;</a>
+            <p class="modal-body">
+                <h2 class="table-heading">New Technician</h2>
+
+                <div class="cont-contactbtn">
+                    <div class="cont-flip">
+
+                        <div class="">
+                            <form method="POST" action="#regcro" class="contact-form">
+                                <input type="text" name="techusername" class="gutter" placeholder="username ">
+                                <input type="text" name="techinitials" class="gutter" placeholder="Initials ">
+                                <input type="text" name="techlastname" class="gutter" placeholder="Last Name">
+                                <input type="password" name="techpwd" class="gutter" placeholder="password">
+                                <input type="password" name="techcpwd" class="gutter" placeholder="confirm password">
+
+                                <input class="donebtn" type="submit" name="regtechbtn" value="Done">
+                                <?php
+                                    if(isset($_POST['regtechbtn']))
+                                    {
+                                        $techuname=$_POST['techusername'];
+                                        $techinit=$_POST['techinitials'];
+                                        $techlname=$_POST['techlastname'];
+                                        $techpwd=$_POST['techpwd'];
+                                        $techrole='TECH';
+
+                                        $sqlregtech="INSERT INTO tbl_user (username,initials,surname,password,role) VALUES('$techuname','$techinit','$techlname','$techpwd','$techrole') ";
+
+                                        if(mysqli_query($con,$sqlregtech)){
+                                            echo "USER WAS REGISTERED ";
+
+                                        }
+                                        else{
+                                            echo mysqli_error($con);
+                                        }
+                                        mysqli_close($con);
+                    
+
+
+                                    }
+
+                                   
+
+                
+
+                    
+                                ?>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </p>
+        </div>
+    </div>
+
+
+
+    <!-- Register  Tech Ends-->
 
 
     <!-- Add Mine-->
@@ -405,20 +684,48 @@ $result2 = mysqli_query($con,$sql2);
 
     <div class="modal" id="regmn">
         <div class="modal-content">
-            <h2 class="modal-heading">New Mine</h2>
+           
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
-                <h2 class="table-heading">Mine Details</h2>
+                <h2 class="table-heading">New Mine </h2>
 
                 <div class="cont-contactbtn">
                     <div class="cont-flip">
 
                         <div class="">
-                            <form action="" class="contact-form">
-                                <input type="text" class="gutter" placeholder="Mina Name">
-                                <input type="text" class="gutter" placeholder="Abbreviation">
+                            <form method="POST" action="#regmn" class="contact-form">
+                                <input type="text" name="minename" class="gutter" placeholder="Mina Name">
+                                <input type="text" name="mineid" class="gutter" placeholder="Abbreviation">
 
-                                <input class="donebtn" type="submit" value="Done">
+                                <input class="donebtn" name="addminebtn" type="submit" value="Done">
+                                <?php
+                                    if(isset($_POST['addminebtn']))
+                                    {
+                                        $minename=$_POST['minename'];
+                                        $mineid=$_POST['mineid'];
+                                        
+
+                                        $sqladdmine="INSERT INTO tbl_site (site_id,site_name) VALUES('$minename','$mineid') ";
+
+                                        if(mysqli_query($con,$sqladdmine)){
+                                            echo "Mine was added ";
+
+                                        }
+                                        else{
+                                            echo mysqli_error($con);
+                                        }
+                                        mysqli_close($con);
+                    
+
+
+                                    }
+
+                                   
+
+                
+
+                    
+                                ?>
 
                             </form>
                         </div>
@@ -436,20 +743,48 @@ $result2 = mysqli_query($con,$sql2);
 
     <div class="modal" id="regcp">
         <div class="modal-content">
-            <h2 class="modal-heading">New Check Point</h2>
+            
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
-                <h2 class="table-heading">Check Point Details</h2>
+                <h2 class="table-heading">New Check Point </h2>
 
                 <div class="cont-contactbtn">
                     <div class="cont-flip">
 
                         <div class="">
-                            <form action="" class="contact-form">
-                                <input type="text" class="gutter" placeholder="Check Point Name">
-                                <input type="text" class="gutter" placeholder="Abbreviation">
+                            <form method="POST" action="#regcp" class="contact-form">
+                                <input type="text" name="cpname" class="gutter" placeholder="Check Point Name">
+                                <input type="text" name="cpid" class="gutter" placeholder="Abbreviation">
 
-                                <input class="donebtn" type="submit" value="Done">
+                                <input class="donebtn" name="addcpbtn" type="submit" value="Done">
+                                <?php
+                                    if(isset($_POST['addcpbtn']))
+                                    {
+                                        $cpname=$_POST['cpname'];
+                                        $cpid=$_POST['cpid'];
+                                        
+
+                                        $sqladdcp="INSERT INTO tbl_cp (cp_id,cp_name) VALUES('$cpname','$cpid') ";
+
+                                        if(mysqli_query($con,$sqladdcp)){
+                                            echo "check point was added ";
+
+                                        }
+                                        else{
+                                            echo mysqli_error($con);
+                                        }
+                                        mysqli_close($con);
+                    
+
+
+                                    }
+
+                                   
+
+                
+
+                    
+                                ?>
 
                             </form>
                         </div>
@@ -458,61 +793,15 @@ $result2 = mysqli_query($con,$sql2);
             </p>
         </div>
     </div>
+<!-- Add check point Ends-->
+
+
+
     </form>
 
-    <!-- Add check point Ends-->
-
-     <!-- Edit User-->
-     <div class="modal" id="edituser">
-    <div class="modal-content">
-   
-            <a href="#" class="modal-close">&times;</a>
-            <p class="modal-body">
-                <h2 class="table-heading">All Users</h2>
-
-                <table class="tickets">
-            <tr>
-                <th>username</th>
-                <th>initials</th>
-                <th>surname</th>
-                <th>password</th>
-                
-            
-            </tr>
-<?php
+    
 
 
-$sql2="SELECT * FROM tbl_user ";
-$result2 = mysqli_query($con,$sql2); 
-
-   while($row2=mysqli_fetch_row($result2)){
-       $uname=$row2[0];
-       $init=$row2[1];
-       $sname=$row2[2];
-       $pwd=$row2[3];
-       
-       echo "    <tr>
-       <td>$uname</td>
-       <td>$init</td>
-       <td>$sname</td>
-       <td>$pwd</td>
-       <td><input type='submit' class='editbtn' value='Edit'><input type='submit' class='delbtn' value='Delete'></td>
-       
-   </tr>";
-
-
-   }
-      
-            ?>
-        </table>
-            </p>
-        </div>
-    </div>
-
-
-
-
-    <!-- Edit user-->
     <script type="text/javascript">
         $(".tbox input").on("focus", function() {
             $(this).addClass("focus");
@@ -538,6 +827,10 @@ function setMenu() {
   elmnt4.remove();
     }
 
+}
+
+if(window.history.replaceState){
+    window.history.replaceState(null,null,window.location.href);
 }
 
 
