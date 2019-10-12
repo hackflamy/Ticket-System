@@ -36,11 +36,46 @@ if(isset($_SESSION['uname'])){
    
 }
 $Ticket = new ASSIGN_TECH();
-$message="";
+$user=New USERS();
+$message="";$re_uers='';$eadt_user='';
 if(isset($_REQUEST['btncreateticket']))               
 {
     $message=$Ticket->CREATE_TICKET($_SESSION['uname'],$_REQUEST['tech'],$_REQUEST['checkpoints'],$_REQUEST['sites'],$_REQUEST['tickdesc'],$_REQUEST['tickfeed'],$con);
 }
+
+
+if(isset($_REQUEST['regcrobtn'])){
+                                                                             
+    $message=$user->CREATE_USER($_REQUEST['crousername'],$_REQUEST['croinitials'],$_REQUEST['crolastname'],'CRO',$_REQUEST['cropwd'],$con);
+}
+foreach($user->VIEW_ALL_USERS($con) as $au){
+    $re_uers .="<tr><td>". $au[0]."</td>
+    <td>".$au[1]."</td>
+    <td>".$au[2]."</td>
+    <td>".$au[3]."</td>
+    <td>".$au[4]."</td>
+    <td><form action='Home.php#edituserdet' method='POST'>
+    <input type='hidden' name='useredit' value='".$au[0]."'>
+    <input type='submit' name='usereditbtn' value='Edit'>
+    </form></td> </tr>";
+}
+
+if(isset($_REQUEST['usereditbtn'])){
+    echo "it did go through==>".$_REQUEST['useredit'];
+    $user->INITIALIZE_USER($_REQUEST['useredit'],$con);
+    $eadt_user = '<form method="POST" action="#regcro" class="contact-form">
+                                <input type="text" name="crousername" class="gutter" placeholder="username " value="'.$user->NAME().'">
+                                <input type="text" name="croinitials" class="gutter" placeholder="Initials " value="'.$user->IN().'">
+                                <input type="text" name="crolastname" class="gutter" placeholder="Last Name" value="'.$user->SURNAME().'">
+                                <input type="password" name="cropwd"  placeholder="password" value="'.$user->PASSWORD().'"> 
+
+                                <input class="donebtn" type="submit" name="regcrobtn" value="Done">
+                                
+
+                            </form>';
+}
+
+
 ?>
 
 
@@ -273,9 +308,9 @@ $result2 = mysqli_query($con,$sql2);
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
                 <h2 class="table-heading">Manage Users</h2>
-                <h2 class="table-heading"><?php if(isset($_SESSION['message'])){echo $_SESSION['message'];$_SESSION['message']="";}?></h2>
+              
                 
-                <table class="tickets">
+        <table class="tickets">
             <tr>
                 <th>username</th>
                 <th>initials</th>
@@ -284,28 +319,7 @@ $result2 = mysqli_query($con,$sql2);
                 
             
             </tr>
-<?php
-
-
-$sql2="SELECT * FROM tbl_user ";
-$result2 = mysqli_query($con,$sql2); 
-
-   while($row2=mysqli_fetch_row($result2)){
-       $uname=$row2[0];
-       $init=$row2[1];
-       $sname=$row2[2];
-       $pwd=$row2[3];
-       ?>
-        <tr>
-       <td><?php echo $uname;?></td>
-       <td><?php echo $init;?></td>
-       <td><?php echo $sname;?></td>
-       <td><?php echo $pwd;?></td>
-       <td><a href="#edituserdet" class="editbtn">Edit</a> <a href="crudprocess.php?delete=<?php echo $uname;?>" class="delbtn">Delete</a> </td>
-       
-   </tr>
-
-   <?php  }?>
+            <?php echo $re_uers;?>
   
       
            
@@ -315,9 +329,9 @@ $result2 = mysqli_query($con,$sql2);
             </p>
         </div>
     </div>
-    
-    <div class="modal" id="edituserdet">
-        <div class="modal-content">
+    <!-- details showing for the curent user -->
+    <div class="modal2" id="edituserdet">
+        <div class="modal-contentd">
             
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
@@ -327,17 +341,7 @@ $result2 = mysqli_query($con,$sql2);
                     <div class="cont-flip">
 
                         <div class="">
-                            <form method="POST" action="#regcro" class="contact-form">
-                                <input type="text" name="crousername" class="gutter" placeholder="username ">
-                                <input type="text" name="croinitials" class="gutter" placeholder="Initials ">
-                                <input type="text" name="crolastname" class="gutter" placeholder="Last Name">
-                                <input type="password" name="cropwd"  placeholder="password">
-                                <input type="password" name="crocpwd"  placeholder="confirm password">
-
-                                <input class="donebtn" type="submit" name="regcrobtn" value="Done">
-                                
-
-                            </form>
+                            <?php echo $eadt_user;  ?>                     
                         </div>
                     </div>
                 </div>
@@ -347,7 +351,7 @@ $result2 = mysqli_query($con,$sql2);
 
 
 
-    <!-- wdit  CRO Ends-->
+    <!-- details showing for the curent user  Ends-->
 
 
 
@@ -573,7 +577,7 @@ $result2 = mysqli_query($con,$sql2);
             
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
-                <h2 class="table-heading">New CRO</h2>
+                <h2 class="table-heading">New Ticket</h2>
                 
 
                 <div class="cont-contactbtn">
@@ -644,38 +648,8 @@ $result2 = mysqli_query($con,$sql2);
                                 <input type="password" name="crocpwd"  placeholder="confirm password">
 
                                 <input class="donebtn" type="submit" name="regcrobtn" value="Done">
-                                <?php
-                                    if(isset($_POST['regcrobtn']))
-                                    {
-                                        $crouname=$_POST['crousername'];
-                                        $croinit=$_POST['croinitials'];
-                                        $crolname=$_POST['crolastname'];
-                                        $cropwd=$_POST['cropwd'];
-                                        $crorole='CRO';
-
-                                        $sqlregcro="INSERT INTO tbl_user (username,initials,surname,password,role) VALUES('$crouname','$croinit','$crolname','$cropwd','$crorole') ";
-
-                                        if(mysqli_query($con,$sqlregcro)){
-                                            $_SESSION['message']="Control Room Operater was added successfully";
-                                            echo "<script>location.href='Home.php#edituser'</script>";
-
-                                        }
-                                        else{
-                                            echo mysqli_error($con);
-                                        }
-                                        mysqli_close($con);
-                    
-
-
-                                    }
-
-                                   
-
-                
-
-                    
-                                ?>
-
+                                <label ><?php echo $message;?></label>
+                               
                             </form>
                         </div>
                     </div>

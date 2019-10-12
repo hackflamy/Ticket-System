@@ -59,7 +59,7 @@
 		 if(!$this->CONFIRM_USER($N,$PS,$Con)){         // Returns True : User exists, Shouldn't add him.
 			 $Con->query("Insert into `ticketsystem`.`tbl_user`  
 			  values('$N','$IN','$S','$PS','$R')");
-			   echo " <p class='confirmation_message'>User created</p>";
+			   return " <p class='confirmation_message'>User created</p>";
 			}else{ return "<p class='confirmation_message'>User already exist.</p>";} 
 	   }  	 
 
@@ -97,8 +97,8 @@
 		 return $this->Surname;
 	 }
  
-     public function ID(){
-		 return $this->ID;
+     public function IN(){
+		 return $this->Initials;
 	 } 
  
      public function ROLE(){
