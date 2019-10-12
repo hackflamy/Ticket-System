@@ -1,5 +1,7 @@
 <?php
-session_start();
+
+
+
 $_SESSION['message']="";
 $host ="localhost";
 $user= "root";
@@ -27,3 +29,6 @@ if(isset($_GET['delete']))
 
 
 }
+
+
+

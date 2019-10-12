@@ -7,7 +7,6 @@ session_start();
 }
 
 
-
 $host ="localhost";
 $user= "root";
 $pwd="";
@@ -15,6 +14,8 @@ $db="ticketsystem";
 
 
 $con=mysqli_connect($host,$user,$pwd,$db);
+require_once('crudprocess.php');
+
 $uname=$_SESSION['uname'];
 if(isset($_SESSION['uname'])){
 
@@ -194,11 +195,13 @@ $result2 = mysqli_query($con,$sql2);
 
     <div class="modal" id="view">
         <div class="modal-content">
+        <div class="contentholder">
         <div class="filter">
     <h2> <input type="textarea" class="ticketinput" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number, Technician, Site, Check point" >&nbsp   
     <input class="searchbtn" type="submit" value="Search">
     <input class="printbtn" type="submit" value=""> </h2>
     </div>
+   
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
                 <h2 class="table-heading">All Tickets</h2>
@@ -248,6 +251,7 @@ $result2 = mysqli_query($con,$sql2);
             ?>
         </table>
             </p>
+            </div>
         </div>
     </div>
 
@@ -255,13 +259,14 @@ $result2 = mysqli_query($con,$sql2);
 
     <!-- Dashbaord/View Ticket ends-->
          <!-- Edit User-->
+         
          <div class="modal" id="edituser">
     <div class="modal-content">
    
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
                 <h2 class="table-heading">Manage Users</h2>
-                <h2 class="table-heading"><?php if(isset($_SESSION['message'])){echo $_SESSION['message'];}?></h2>
+                <h2 class="table-heading"><?php if(isset($_SESSION['message'])){echo $_SESSION['message'];$_SESSION['message']="";}?></h2>
                 
                 <table class="tickets">
             <tr>
@@ -289,7 +294,7 @@ $result2 = mysqli_query($con,$sql2);
        <td><?php echo $init;?></td>
        <td><?php echo $sname;?></td>
        <td><?php echo $pwd;?></td>
-       <td><input type='submit' class='editbtn' value='Edit'>  <a href="crudprocess.php?delete=<?php echo $uname;?>" class="delbtn">Delete</a> </td>
+       <td><a href="crudprocess.php?edit=<?php echo $uname;?>" class="editbtn">Edit</a> <a href="crudprocess.php?delete=<?php echo $uname;?>" class="delbtn">Delete</a> </td>
        
    </tr>
 
@@ -298,19 +303,24 @@ $result2 = mysqli_query($con,$sql2);
       
            
         </table>
+        
+           
             </p>
         </div>
     </div>
+    
+</form>  
+
+<!-- edit user-->
 
 
 
-
-    <!-- Edit user-->
 
      <!-- open tecket-->
-
+     <form method="POST" action="#" >
      <div class="modal" id="opentick">
         <div class="modal-content">
+        <div class="contentholder">
         <div class="filter">
     <h2> <input type="textarea" class="ticketinput" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number, Technician, Site, Check point" >&nbsp   
     <input class="searchbtn" type="submit" value="Search">
@@ -356,18 +366,24 @@ $result2 = mysqli_query($con,$sql2);
        <td>$cro</td>
        <td>$solution</td>
        <td>$date</td>
+       <td><input type='submit' name='closebtn' class='ticketeditbtn' value='Close'> <input type='hidden' name='tickvalue' value='Close'></td>
        
    </tr>";
 
 
    }
-      
+      if(isset($_POST['closebtn'])){
+        $_SESSION['message']="Ticket canot be closed without a feedback";
+        echo "<script>location.href='Home.php#modal'</script>";
+
+      }
             ?>
         </table>
             </p>
         </div>
+        </div>
     </div>
-
+     </form>
 
 
     <!-- open ticket ends-->
@@ -375,6 +391,7 @@ $result2 = mysqli_query($con,$sql2);
 
      <div class="modal" id="closetick">
         <div class="modal-content">
+        <div class="contentholder">
         <div class="filter">
     <h2> <input type="textarea" class="ticketinput" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number, Technician, Site, Check point" >&nbsp   
     <input class="searchbtn" type="submit" value="Search">
@@ -430,6 +447,7 @@ $result2 = mysqli_query($con,$sql2);
         </table>
             </p>
         </div>
+        </div>
     </div>
 
 
@@ -439,10 +457,11 @@ $result2 = mysqli_query($con,$sql2);
     <!-- update Ticket-->
     <div class="modal" id="modal">
     <div class="modal-content">
-            
+    <div class="contentholder">
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
                 <h2 class="table-heading">Available Tickets</h2>
+                <label class="lbldanger"><?php if(isset($_SESSION['message'])){$msg=$_SESSION['message']; echo $msg;$_SESSION['message']=""; } ?></label>
 
                 <table class="tickets">
             <tr>
@@ -491,6 +510,7 @@ $result2 = mysqli_query($con,$sql2);
         </table>
             </p>
         </div>
+        </div>
     </div>
 
 
@@ -500,18 +520,25 @@ $result2 = mysqli_query($con,$sql2);
 
     <!-- isue a ticket-->
 
-    <div class="modal" id="isuetick">
-        <div class="modal-content">
 
+
+
+
+     <!-- issue ticket -->
+
+     <div class="modal" id="isuetick">
+        <div class="modal-content">
+            
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
-                <h2 class="table-heading">NEW TICKET</h2>
+                <h2 class="table-heading">New CRO</h2>
+
                 <div class="cont-contactbtn">
                     <div class="cont-flip">
 
                         <div class="">
-                            <form action="" class="contact-form">
-                                <input type="text" class="gutter" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number" readonly>
+                            <form method="POST" action="#regcro" class="contact-form">
+                            <input type="text" class="gutter" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number" readonly>
                                 
                                 <select name="Site" class="gutter">
                                         <option value="">Select Site</option>
@@ -534,9 +561,10 @@ $result2 = mysqli_query($con,$sql2);
                                     <option value="EXIT">Charel</option>
                                     <option value="SECONDARY IN">Danova</option>
                                   </select>
-                                <textarea name="" id="" placeholder="Problem"></textarea>
-                                <textarea name="" id="" placeholder="Solution"></textarea>
+                                <textarea name="" id="" placeholder="Ticket Description"></textarea>
+                                <textarea name="" id="" placeholder="Ticket Feedback"></textarea>
                                 <input class="donebtn" type="submit" value="Done">
+                               
 
                             </form>
                         </div>
@@ -548,7 +576,9 @@ $result2 = mysqli_query($con,$sql2);
 
 
 
-    <!-- isue a ticket Ends-->
+    <!-- isue Ticket Ends-->
+
+    
 
     <!-- Register  CRO-->
 
@@ -558,7 +588,7 @@ $result2 = mysqli_query($con,$sql2);
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
                 <h2 class="table-heading">New CRO</h2>
-
+                <label class="lblsuccess"><?php if(isset($_SESSION['message'])){$msg=$_SESSION['message']; echo $msg;$_SESSION['message']=""; } ?></label>
                 <div class="cont-contactbtn">
                     <div class="cont-flip">
 
@@ -567,8 +597,8 @@ $result2 = mysqli_query($con,$sql2);
                                 <input type="text" name="crousername" class="gutter" placeholder="username ">
                                 <input type="text" name="croinitials" class="gutter" placeholder="Initials ">
                                 <input type="text" name="crolastname" class="gutter" placeholder="Last Name">
-                                <input type="password" name="cropwd" class="gutter" placeholder="password">
-                                <input type="password" name="crocpwd" class="gutter" placeholder="confirm password">
+                                <input type="password" name="cropwd"  placeholder="password">
+                                <input type="password" name="crocpwd"  placeholder="confirm password">
 
                                 <input class="donebtn" type="submit" name="regcrobtn" value="Done">
                                 <?php
@@ -583,7 +613,8 @@ $result2 = mysqli_query($con,$sql2);
                                         $sqlregcro="INSERT INTO tbl_user (username,initials,surname,password,role) VALUES('$crouname','$croinit','$crolname','$cropwd','$crorole') ";
 
                                         if(mysqli_query($con,$sqlregcro)){
-                                            echo "USER WAS REGISTERED ";
+                                            $_SESSION['message']="Control Room Operater was added successfully";
+                                            echo "<script>location.href='Home.php#edituser'</script>";
 
                                         }
                                         else{
@@ -621,7 +652,7 @@ $result2 = mysqli_query($con,$sql2);
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
                 <h2 class="table-heading">New Technician</h2>
-
+                <label class="lblsuccess"><?php if(isset($_SESSION['message'])){$msg=$_SESSION['message']; echo $msg;$_SESSION['message']=""; } ?></label>
                 <div class="cont-contactbtn">
                     <div class="cont-flip">
 
@@ -646,7 +677,8 @@ $result2 = mysqli_query($con,$sql2);
                                         $sqlregtech="INSERT INTO tbl_user (username,initials,surname,password,role) VALUES('$techuname','$techinit','$techlname','$techpwd','$techrole') ";
 
                                         if(mysqli_query($con,$sqlregtech)){
-                                            echo "USER WAS REGISTERED ";
+                                            $_SESSION['message']="Technician was added successfully";
+                                            echo "<script>location.href='Home.php#regtech'</script>";
 
                                         }
                                         else{
@@ -688,7 +720,7 @@ $result2 = mysqli_query($con,$sql2);
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
                 <h2 class="table-heading">New Mine </h2>
-
+                <label class="lblsuccess"><?php if(isset($_SESSION['message'])){$msg=$_SESSION['message']; echo $msg;$_SESSION['message']=""; } ?></label>
                 <div class="cont-contactbtn">
                     <div class="cont-flip">
 
@@ -708,7 +740,9 @@ $result2 = mysqli_query($con,$sql2);
                                         $sqladdmine="INSERT INTO tbl_site (site_id,site_name) VALUES('$minename','$mineid') ";
 
                                         if(mysqli_query($con,$sqladdmine)){
-                                            echo "Mine was added ";
+                                            $_SESSION['message']="Site was added successfully";
+                                            echo "<script>location.href='Home.php#regmn'</script>";
+                                            
 
                                         }
                                         else{
@@ -747,7 +781,7 @@ $result2 = mysqli_query($con,$sql2);
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
                 <h2 class="table-heading">New Check Point </h2>
-
+                <label class="lblsuccess"><?php if(isset($_SESSION['message'])){$msg=$_SESSION['message']; echo $msg;$_SESSION['message']=""; } ?></label>
                 <div class="cont-contactbtn">
                     <div class="cont-flip">
 
@@ -767,7 +801,8 @@ $result2 = mysqli_query($con,$sql2);
                                         $sqladdcp="INSERT INTO tbl_cp (cp_id,cp_name) VALUES('$cpname','$cpid') ";
 
                                         if(mysqli_query($con,$sqladdcp)){
-                                            echo "check point was added ";
+                                            $_SESSION['message']="Check Point was added successfully";
+                                            echo "<script>location.href='Home.php#regcp'</script>";
 
                                         }
                                         else{

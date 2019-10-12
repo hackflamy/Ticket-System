@@ -97,6 +97,16 @@ a:visited {
     visibility: visible;
 }
 
+#edituserdet:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+#edituserdet:target .modal-content {
+    opacity: 1;
+    visibility: visible;
+}
+
 #regcp:target {
     opacity: 1;
     visibility: visible;
