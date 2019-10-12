@@ -1,5 +1,5 @@
 <?php
-require_once('Assets/OO_Class.php');
+
 session_start();
  if(!isset($_SESSION['uname']))
 {
@@ -14,6 +14,8 @@ $db="ticketsystem";
 
 
 $con=mysqli_connect($host,$user,$pwd,$db);
+require_once('Assets/OO_Class.php');
+
 require_once('crudprocess.php');
 
 $uname=$_SESSION['uname'];
@@ -34,6 +36,11 @@ if(isset($_SESSION['uname'])){
    
 }
 $Ticket = new ASSIGN_TECH();
+$message="";
+if(isset($_REQUEST['btncreateticket']))               
+{
+    $message=$Ticket->CREATE_TICKET($_SESSION['uname'],$_REQUEST['tech'],$_REQUEST['checkpoints'],$_REQUEST['sites'],$_REQUEST['tickdesc'],$_REQUEST['tickfeed'],$con);
+}
 ?>
 
 
@@ -294,7 +301,7 @@ $result2 = mysqli_query($con,$sql2);
        <td><?php echo $init;?></td>
        <td><?php echo $sname;?></td>
        <td><?php echo $pwd;?></td>
-       <td><a href="crudprocess.php?edit=<?php echo $uname;?>" class="editbtn">Edit</a> <a href="crudprocess.php?delete=<?php echo $uname;?>" class="delbtn">Delete</a> </td>
+       <td><a href="#edituserdet" class="editbtn">Edit</a> <a href="crudprocess.php?delete=<?php echo $uname;?>" class="delbtn">Delete</a> </td>
        
    </tr>
 
@@ -309,6 +316,41 @@ $result2 = mysqli_query($con,$sql2);
         </div>
     </div>
     
+    <div class="modal" id="edituserdet">
+        <div class="modal-content">
+            
+            <a href="#" class="modal-close">&times;</a>
+            <p class="modal-body">
+                <h2 class="table-heading">New CRO</h2>
+                <label class="lblsuccess"><?php if(isset($_SESSION['message'])){$msg=$_SESSION['message']; echo $msg;$_SESSION['message']=""; } ?></label>
+                <div class="cont-contactbtn">
+                    <div class="cont-flip">
+
+                        <div class="">
+                            <form method="POST" action="#regcro" class="contact-form">
+                                <input type="text" name="crousername" class="gutter" placeholder="username ">
+                                <input type="text" name="croinitials" class="gutter" placeholder="Initials ">
+                                <input type="text" name="crolastname" class="gutter" placeholder="Last Name">
+                                <input type="password" name="cropwd"  placeholder="password">
+                                <input type="password" name="crocpwd"  placeholder="confirm password">
+
+                                <input class="donebtn" type="submit" name="regcrobtn" value="Done">
+                                
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </p>
+        </div>
+    </div>
+
+
+
+    <!-- wdit  CRO Ends-->
+
+
+
 </form>  
 
 <!-- edit user-->
@@ -532,15 +574,16 @@ $result2 = mysqli_query($con,$sql2);
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
                 <h2 class="table-heading">New CRO</h2>
+                
 
                 <div class="cont-contactbtn">
                     <div class="cont-flip">
 
                         <div class="">
-                            <form method="POST" action="#regcro" class="contact-form">
-                            <input type="text" class="gutter" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number" readonly>
+                            <form method="POST" action="#isuetick" class="contact-form">
+                            <input type="text" class="gutter" name="ticketno" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number" readonly>
                                 
-                                <select name="Site" class="gutter">
+                                <select name="sites" class="gutter">
                                         <option value="">Select Site</option>
                                         <option value="WB IN 1">Klip25</option>
                                         <option value="WB IN 2">TNDB</option>
@@ -554,17 +597,17 @@ $result2 = mysqli_query($con,$sql2);
                                     <option value="EXIT">EXIT</option>
                                     <option value="SECONDARY IN">SECONDARY IN</option>
                                   </select>
-                                <select name="Mine" class="gutter">
+                                <select name="tech" class="gutter">
                                     <option value="">Select Technician</option>
                                     <option value="WB IN 1">Tendani</option>
                                     <option value="WB IN 2">Ashley</option>
                                     <option value="EXIT">Charel</option>
                                     <option value="SECONDARY IN">Danova</option>
                                   </select>
-                                <textarea name="" id="" placeholder="Ticket Description"></textarea>
-                                <textarea name="" id="" placeholder="Ticket Feedback"></textarea>
-                                <input class="donebtn" type="submit" value="Done">
-                               
+                                <textarea name="tickdesc" id="" placeholder="Ticket Description"></textarea>
+                                <textarea name="tickfeed" id="" placeholder="Ticket Feedback"></textarea>
+                                <input class="donebtn" name="btncreateticket" type="submit" value="Done">
+                                <label ><?php echo $message;?></label>
 
                             </form>
                         </div>
@@ -802,7 +845,7 @@ $result2 = mysqli_query($con,$sql2);
 
                                         if(mysqli_query($con,$sqladdcp)){
                                             $_SESSION['message']="Check Point was added successfully";
-                                            echo "<script>location.href='Home.php#regcp'</script>";
+                                            
 
                                         }
                                         else{
