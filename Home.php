@@ -3,7 +3,7 @@
 session_start();
  if(!isset($_SESSION['uname']))
 {
-    echo "<script>location.href='index.php'</script>";
+    echo "<script>location.href='login.php'</script>";
 }
 
 
@@ -174,6 +174,14 @@ if(isset($_REQUEST['usereditbtn'])){
     <!-- sidebar ends-->
 
     <!-- Dashbaord -->
+    
+<div class="bghlogo">
+
+<img class="bghimg" src="https://20crxh33y0ym3k6p902yq4pg-wpengine.netdna-ssl.com/wp-content/uploads/2018/10/favicon.png" alt="Trulli" width="65" height="70">
+
+
+</div>
+
 
     <div class="contentholder">
     <div class="filter">
@@ -330,12 +338,12 @@ $result2 = mysqli_query($con,$sql2);
         </div>
     </div>
     <!-- details showing for the curent user -->
-    <div class="modal2" id="edituserdet">
+    <div class="modal" id="edituserdet">
         <div class="modal-contentd">
             
             <a href="#" class="modal-close">&times;</a>
             <p class="modal-body">
-                <h2 class="table-heading">New CRO</h2>
+                <h2 class="table-heading">Update CRO</h2>
                 <label class="lblsuccess"><?php if(isset($_SESSION['message'])){$msg=$_SESSION['message']; echo $msg;$_SESSION['message']=""; } ?></label>
                 <div class="cont-contactbtn">
                     <div class="cont-flip">
@@ -640,10 +648,10 @@ $result2 = mysqli_query($con,$sql2);
 
                         <div class="">
                             <form method="POST" action="#regcro" class="contact-form">
-                                <input type="text" name="crousername" class="gutter" placeholder="username ">
-                                <input type="text" name="croinitials" class="gutter" placeholder="Initials ">
-                                <input type="text" name="crolastname" class="gutter" placeholder="Last Name">
-                                <input type="password" name="cropwd" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"  placeholder="password">
+                                <input type="text" name="crousername" pattern="[a-z0-9._%+-]+@[a-z0-9.-]{2,}$" title="Hint: example@BGH" class="gutter" placeholder="username ">
+                                <input type="text" name="croinitials" pattern=".{1,}" title="One or more characters" class="gutter" placeholder="Initials ">
+                                <input type="text" name="crolastname" pattern=".{4,}" title="One or more characters" class="gutter" placeholder="Last Name">
+                                <input type="password" name="cropwd" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Hint: exampleBGH"  placeholder="password">
                                 <input type="password" name="crocpwd"  placeholder="confirm password">
 
                                 <input class="donebtn" type="submit" name="regcrobtn" value="Done">
@@ -674,10 +682,10 @@ $result2 = mysqli_query($con,$sql2);
 
                         <div class="">
                             <form method="POST" action="#regcro" class="contact-form">
-                                <input type="text" name="techusername" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="gutter" placeholder="username ">
-                                <input type="text" name="techinitials" class="gutter" placeholder="Initials ">
-                                <input type="text" name="techlastname" class="gutter" placeholder="Last Name">
-                                <input type="password" name="techpwd"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" class="gutter" placeholder="password">
+                                <input type="text" name="techusername" pattern="[a-z0-9._%+-]+@[a-z0-9.-]{2,}$" title="Hint: example@BGH" class="gutter" placeholder="username ">
+                                <input type="text" name="techinitials" pattern=".{1,}" title="One or more characters" class="gutter" placeholder="Initials ">
+                                <input type="text" name="techlastname" class="gutter" pattern=".{4,}" title="4 or more characters"placeholder="Last Name">
+                                <input type="password" name="techpwd"  pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Hint: exampleBGH" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" class="gutter" placeholder="password">
                                 <input type="password" name="techcpwd" class="gutter" placeholder="confirm password">
 
                                 <input class="donebtn" type="submit" name="regtechbtn" value="Done">
@@ -742,8 +750,8 @@ $result2 = mysqli_query($con,$sql2);
 
                         <div class="">
                             <form method="POST" action="#regmn" class="contact-form">
-                                <input type="text" name="minename" pattern=".{3,}" class="gutter" placeholder="Mina Name">
-                                <input type="text" name="mineid" pattern=".{3,}" class="gutter" placeholder="Abbreviation">
+                                <input type="text" name="minename" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Mina Name">
+                                <input type="text" name="mineid" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Abbreviation">
 
                                 <input class="donebtn" name="addminebtn" type="submit" value="Done">
                                 <?php
@@ -802,8 +810,8 @@ $result2 = mysqli_query($con,$sql2);
                     <div class="cont-flip">
 
                         <div class="">
-                            <form method="POST" action="#regcp" class="contact-form">
-                                <input type="text" name="cpname" class="gutter" placeholder="Check Point Name">
+                            <form method="POST" action="#regcp" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="contact-form">
+                                <input type="text" name="cpname" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Check Point Name">
                                 <input type="text" name="cpid" class="gutter" placeholder="Abbreviation">
 
                                 <input class="donebtn" name="addcpbtn" type="submit" value="Done">

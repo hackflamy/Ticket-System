@@ -1,89 +1,47 @@
-<?php
-$host ="localhost";
-$user= "root";
-$pwd="";
-$db="ticketsystem";
-
-session_start();
- if(isset($_SESSION['uname']))
-{
-    echo "<script>location.href='Home.php'</script>";
-}
-else{
-
-
-$con=mysqli_connect($host,$user,$pwd,$db);
-
-if (mysqli_connect_errno())
-  {
-  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-  }
-
-if(isset($_POST['username'])){
-    $uname=$_POST['username'];
-    $pword=$_POST['password'];
-    $sql="SELECT * FROM tbl_user WHERE username='".$uname."' AND password='".$pword."' LIMIT 1";
-
-    $result = mysqli_query($con,$sql); 
-    if(mysqli_num_rows($result)==1){
-        $_SESSION['uname']=$uname;
-        echo "<script>location.href='Home.php'</script>";
-    }
-    else{
-        echo "you have enter incorect details";
-        exit;
-    }
-
-}
-}
-?>
-
-
 <!DOCTYPE html>
+  <html class="no-js"> 
+     <head>
+         <meta charset="utf-8">
+         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+         <title></title>
+         <meta name="description" content="">
+         <meta name="viewport" content="width=device-width, initial-scale=1">
+         <script src="js/jquery-3.3.1.min.js"></script>
+         <link rel="stylesheet" href="index.css">
+     </head>
+     <body  onload="pageRedirect()">
+        
 
-<!--[if gt IE 8]><!-->
-<html class="no-js">
-<!--<![endif]-->
+     <div class="bghlogo">
+    
+     <img class="bghimg" src="https://20crxh33y0ym3k6p902yq4pg-wpengine.netdna-ssl.com/wp-content/uploads/2018/10/favicon.png" alt="Trulli" width="150" height="150">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
+</div>
 
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="login.css">
-</head>
 
-<body>
+<div class="footer">
+    
+<div class="bghlogo">
+<div class="loader"></div>
 
-    <form method="POST" action="#" class="login-form">
-        <h1>LOGIN</h1>
-        <div class="tbox">
-            <input type="text" name="username" id="">
-            <span data-placeholder="USERNAME"></span>
-        </div>
+</div>
 
-        <div class="tbox">
-            <input type="password" name="password" id="">
-            <span data-placeholder="PASSWORD"></span>
-        </div>
-        <input type="submit" class="loginbtn" value="login">
-        <div class="bottom-text">
-            Don't have an account contact admin
-        </div>
-    </form>
 
-    <script type="text/javascript">
-        $(".tbox input").on("focus", function() {
-            $(this).addClass("focus");
-        });
-        $(".tbox input").on("blur", function() {
-            if ($(this).val() == "")
-                $(this).removeClass("focus")
-        });
-    </script>
-</body>
+</div>
+         
+     <script type="text/javascript">
+         
+         function pageRedirect(){
 
-</html>
+
+ var delay = 4000; //      time in milliseconds
+ // Display message
+ setTimeout(function(){
+  window.location = "login.php";
+ },delay);
+ 
+}
+         
+         </script>
+     </body>
+ </html>

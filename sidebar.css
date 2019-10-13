@@ -25,14 +25,15 @@ nav.main-menu.expanded {
 }
 
 .main-menu {
-    background: #212121;
-    border-right: 1px solid black;
+    background: rgb(80, 2, 2);
+    border-right: 1px solid rgb(20, 18, 18);
     position: fixed;
     top: 0;
     bottom: 0;
     height: 100%;
     left: 0;
     width: 60px;
+    opacity: 0.9;
     overflow: hidden;
     transition: width 0.5s linear;
     z-index: 1000;
@@ -121,7 +122,7 @@ nav.main-menu li.active a,
 .no-touch .dashboard-page nav.dashboard-menu ul li:hover a,
 .dashboard-page nav.dashboard-menu ul li.active a {
     color: white;
-    background-color: #5fa2db;
+    background-color: #272222;
 }
 
 .area {
