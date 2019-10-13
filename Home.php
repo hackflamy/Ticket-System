@@ -607,8 +607,7 @@ $result2 = mysqli_query($con,$sql2);
                                     <option value="WB IN 2">Ashley</option>
                                     <option value="EXIT">Charel</option>
                                     <option value="SECONDARY IN">Danova</option>
-                                  </select>
-                                <textarea name="tickdesc" id="" placeholder="Ticket Description"></textarea>
+                                <textarea name="tickdesc" id="" pattern=".{20,}" placeholder="Ticket Description"></textarea>
                                 <textarea name="tickfeed" id="" placeholder="Ticket Feedback"></textarea>
                                 <input class="donebtn" name="btncreateticket" type="submit" value="Done">
                                 <label ><?php echo $message;?></label>
@@ -644,7 +643,7 @@ $result2 = mysqli_query($con,$sql2);
                                 <input type="text" name="crousername" class="gutter" placeholder="username ">
                                 <input type="text" name="croinitials" class="gutter" placeholder="Initials ">
                                 <input type="text" name="crolastname" class="gutter" placeholder="Last Name">
-                                <input type="password" name="cropwd"  placeholder="password">
+                                <input type="password" name="cropwd" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"  placeholder="password">
                                 <input type="password" name="crocpwd"  placeholder="confirm password">
 
                                 <input class="donebtn" type="submit" name="regcrobtn" value="Done">
@@ -675,10 +674,10 @@ $result2 = mysqli_query($con,$sql2);
 
                         <div class="">
                             <form method="POST" action="#regcro" class="contact-form">
-                                <input type="text" name="techusername" class="gutter" placeholder="username ">
+                                <input type="text" name="techusername" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="gutter" placeholder="username ">
                                 <input type="text" name="techinitials" class="gutter" placeholder="Initials ">
                                 <input type="text" name="techlastname" class="gutter" placeholder="Last Name">
-                                <input type="password" name="techpwd" class="gutter" placeholder="password">
+                                <input type="password" name="techpwd"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" class="gutter" placeholder="password">
                                 <input type="password" name="techcpwd" class="gutter" placeholder="confirm password">
 
                                 <input class="donebtn" type="submit" name="regtechbtn" value="Done">
@@ -743,8 +742,8 @@ $result2 = mysqli_query($con,$sql2);
 
                         <div class="">
                             <form method="POST" action="#regmn" class="contact-form">
-                                <input type="text" name="minename" class="gutter" placeholder="Mina Name">
-                                <input type="text" name="mineid" class="gutter" placeholder="Abbreviation">
+                                <input type="text" name="minename" pattern=".{3,}" class="gutter" placeholder="Mina Name">
+                                <input type="text" name="mineid" pattern=".{3,}" class="gutter" placeholder="Abbreviation">
 
                                 <input class="donebtn" name="addminebtn" type="submit" value="Done">
                                 <?php
