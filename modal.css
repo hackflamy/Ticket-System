@@ -1,4 +1,3 @@
-<style>
 /* modal styling*/
 
 a:link,
@@ -318,4 +317,7 @@ th {
     padding: 30px;
 }
 
-</style>
+.cont-flip {
+    align-content: center;
+    justify-content: center;
+}

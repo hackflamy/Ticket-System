@@ -42,6 +42,7 @@ $user=New USERS();
 $CP = new CHECKPOINT();
 $Tech = new TECHNICIAN();
 $S = new SITE();
+$Site = new SITE();
 $technician = ''; $s = ''; $cpp = '';$re_ticket="";$filterdata="<tbody>";$filtalltick="<tbody>";
 
 
@@ -194,7 +195,7 @@ if(isset($_REQUEST['btncreateticket']))
     $message=$Ticket->CREATE_TICKET($_REQUEST['sites'],$_REQUEST['checkpoints'],$_REQUEST['tickdesc'],$_REQUEST['tech'],$_SESSION['uname'],$_REQUEST['tickfeed'],$con);
 }
 if(isset($_REQUEST['addminebtn'])){
-    $message= $S->CREATE_SITE($_REQUEST['minename'],$con);
+    $message= $Site->CREATE_SITE($_REQUEST['minename'],$con);
 }
 if(isset($_REQUEST['addcpbtn'])){
     $message= $CP->CREATE_CHECKPOINT($_REQUEST['cpname'],$con);
@@ -228,7 +229,7 @@ foreach($user->VIEW_ALL_USERS($con) as $au){
 						   <form></form>
 							<form action='#edituserdet' method='POST'>
 								<input type='hidden' name='useredit' value='".$au[0]."'>
-								<input type='submit' name='usereditbtn' value='Edit'>
+								<input type='submit' class='ticketeditbtn' name='usereditbtn' value='Edit'>
 							</form>
 					  </td> 
 				 </tr>";
@@ -276,7 +277,7 @@ foreach($Ticket->VIEW_ALL_TICKETS($con) as $tt){
 						   <form></form>
 							<form action='#updateTicket' method='POST'>
 								<input type='hidden' name='ticketedit' value='".$tt[0]."'>
-								<input type='submit' name='ticketeditbtn' value='Edit'>
+								<input type='submit' class='ticketeditbtn' name='ticketeditbtn' value='Edit'>
 							</form>
 					  </td> 
 				 </tr>"; 
@@ -308,6 +309,7 @@ $re_uers .= "</tbody>";
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
         <script src="js/jquery-3.3.1.min.js"></script>
         <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Acme&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="sidebar.css">
         <link rel="stylesheet" href="modal.css">
         <link rel="stylesheet" href="ussueticket.css">
@@ -327,7 +329,7 @@ $re_uers .= "</tbody>";
                 <ul class="">
                     <li>
                         <a href="#Deshboard"><i class="fa fa-home fa-2x"></i>
-                        <span class="nav-text">Deshboard</span></a>
+                        <span class="nav-text">Dashboard</span></a>
                     </li>
                     <li class="has-subnav">
                         <a href="#view"><i class="fa fa-ticket fa-2x"></i>
@@ -396,7 +398,7 @@ $re_uers .= "</tbody>";
                 <div class="contentholder">
                     <a href="#" class="modal-close">&times;</a>
                     <p class="modal-body">
-                        <h2 class="table-heading">Deshboard</h2>
+                        <h2 class="table-heading">Dashboard</h2>
                         <form method="POST" action="#Deshboard" >
                             <div class="filter">
                                 <h2> From: <input type="date" name="startdate" class="dateinput" placeholder="Initials ">&nbsp   
@@ -431,24 +433,23 @@ $re_uers .= "</tbody>";
             <div class="modal" id="view">
                 <div class="modal-content">
                     <div class="contentholder">
-                        <div class="filter">
-                            <h2> <input type="textarea" name="searchall" class="ticketinput" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number, Technician, Site, Check point" >&nbsp   
-                            <input class="searchbtn" name="searchbtn" type="submit" value="Search">
-                            <input class="printbtn" type="submit" value=""> </h2>
-                        </div>
-            
                         <a href="#" class="modal-close">&times;</a>
                         <p class="modal-body">
                             <h2 class="table-heading">All Tickets</h2>
+                            <div class="filter">
+                                <h2> <input type="textarea" name="searchall" class="ticketinput"  placeholder="Ticket Number, Technician, Site, Check point" >&nbsp   
+                                <input class="searchbtn" name="searchbtn" type="submit" value="Search">
+                                <input class="printbtn" type="submit" value=""> </h2>
+                            </div>
                             <table class="tickets">
                             <tr>
                             <th>Ticket Number</th>
                             <th>Site</th>
                             <th>Checkpoint</th>
-                            <th>Problem</th>
+                            <th>Description</th>
                             <th>Technician</th>
                             <th>issued by</th>
-                            <th>Sollution</th>
+                            <th>Feedback</th>
                             <th>Date</th>
                             <th>Time</th>
                             </tr>
@@ -475,6 +476,8 @@ $re_uers .= "</tbody>";
                                 <th>initials</th>
                                 <th>surname</th>
                                 <th>password</th>
+                                <th>Role</th>
+                                <th>Action</th>
                             </tr>
                             <?php echo $re_uers;?>
                         </table>
@@ -510,25 +513,27 @@ $re_uers .= "</tbody>";
             <div class="modal" id="opentick">
                 <div class="modal-content">
                     <div class="contentholder">
+                        <a href="#" class="modal-close">&times;</a>
+                        <p class="modal-body">
+                        <h2 class="table-heading">All Tickets</h2>
                         <div class="filter">
                             <h2> <input type="textarea" name="searchopen" class="ticketinput" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number, Technician, Site, Check point" >&nbsp   
                             <input class="searchbtn" name="searchopenbtn"type="submit" value="Search">
                             <input class="printbtn" type="submit" value=""> </h2>
                         </div>
-                        <a href="#" class="modal-close">&times;</a>
-                        <p class="modal-body">
-                        <h2 class="table-heading">All Tickets</h2>
 
                         <table class="tickets">
                             <tr>
                             <th>Ticket Number</th>
                             <th>Site</th>
                             <th>Checkpoint</th>
-                            <th>Problem</th>
+                            <th>Description</th>
                             <th>Technician</th>
                             <th>issued by</th>
-                            <th>Sollution</th>
+                            <th>Feedback</th>
                             <th>Date</th>
+                            <th>Time</th>
+                            <th>Action</th>
                             </tr>
                                 <?php
                                     $sql2="SELECT * FROM tbl_ticket WHERE accessibility='open' ";
@@ -542,6 +547,7 @@ $re_uers .= "</tbody>";
                                         $cro=$row2[5];
                                         $solution=$row2[6];
                                         $date=$row2[7];
+                                        $time=$row2[8];
                                         echo "    <tr>
                                         <td>$tno</td>
                                         <td>$site</td>
@@ -551,6 +557,7 @@ $re_uers .= "</tbody>";
                                         <td>$cro</td>
                                         <td>$solution</td>
                                         <td>$date</td>
+                                        <td>$time</td>
                                         <td><input type='submit' name='closebtn' class='ticketeditbtn' value='Close'> <input type='hidden' name='tickvalue' value='Close'></td> 
                                         </tr>";
                                     }
@@ -572,24 +579,25 @@ $re_uers .= "</tbody>";
             <div class="modal" id="closetick">
                 <div class="modal-content">
                     <div class="contentholder">
-                        <div class="filter">
-                            <h2> <input type="textarea" class="ticketinput" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number, Technician, Site, Check point" >&nbsp   
-                            <input class="searchbtn" type="submit" value="Search">
-                            <input class="printbtn" type="submit" value=""> </h2>
-                        </div>
                         <a href="#" class="modal-close">&times;</a>
                         <p class="modal-body">
                             <h2 class="table-heading">All Tickets</h2>
+                            <div class="filter">
+                                <h2> <input type="textarea" class="ticketinput" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number, Technician, Site, Check point" >&nbsp   
+                                <input class="searchbtn" type="submit" value="Search">
+                                <input class="printbtn" type="submit" value=""> </h2>
+                            </div>
                             <table class="tickets">
                             <tr>
                             <th>Ticket Number</th>
                             <th>Site</th>
                             <th>Checkpoint</th>
-                            <th>Problem</th>
+                            <th>Description</th>
                             <th>Technician</th>
                             <th>issued by</th>
-                            <th>Sollution</th>
+                            <th>Feedback</th>
                             <th>Date</th>
+                            <th>Time</th>
                             </tr>
                             <?php
                                 $sql2="SELECT * FROM tbl_ticket WHERE accessibility='closed' ";
@@ -632,18 +640,18 @@ $re_uers .= "</tbody>";
                         <a href="#" class="modal-close">&times;</a>
                         <p class="modal-body">
                             <h2 class="table-heading">Available Tickets</h2>
-                            <label class="lbldanger"><?php if(isset($_SESSION['message'])){$msg=$_SESSION['message']; echo $msg;$_SESSION['message']=""; } ?></label>
-
                             <table class="tickets">
                             <tr>
                             <th>Ticket Number</th>
                             <th>Site</th>
                             <th>Checkpoint</th>
-                            <th>Problem</th>
+                            <th>Description</th>
                             <th>Technician</th>
                             <th>issued by</th>
-                            <th>Sollution</th>
+                            <th>Feedback</th>
                             <th>Date</th>  
+                            <th>Time</th>
+                            <th>Action</th> 
                             </tr>
                             <?php echo $re_ticket; ?> 
                             </table>
@@ -747,7 +755,7 @@ $re_uers .= "</tbody>";
                         <div class="cont-flip">
                             <div class="">
                                 <form method="POST" action="#regtech" class="contact-form">
-                                    <input type="text" name="techusername"  placeholder="username ">
+                                    <input type="text" class="single"name="techusername"  placeholder="username ">
                                     <input class="donebtn" type="submit" name="regtechbtn" value="Done">
                                     <label ><?php echo $message;?></label>
                                     
@@ -770,7 +778,7 @@ $re_uers .= "</tbody>";
                         <div class="cont-flip">
                             <div class="">
                                 <form method="POST" action="#regmn" class="contact-form">
-                                    <input type="text" name="minename" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Mina Name">
+                                    <input type="text" class="single"name="minename" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Mina Name">
                                     <input class="donebtn" name="addminebtn" type="submit" value="Done">
                                     <?php echo $message;?>
                                 </form>
@@ -792,7 +800,7 @@ $re_uers .= "</tbody>";
                         <div class="cont-flip">
                             <div class="">
                                 <form method="POST" action="#regcp" class="contact-form">
-                                    <input type="text" name="cpname" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Check Point Name">
+                                    <input type="text" class="single" name="cpname" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Check Point Name">
                                     <input class="donebtn" name="addcpbtn" type="submit" value="Done">
                                     <?php echo $message;?>
                                 </form>
