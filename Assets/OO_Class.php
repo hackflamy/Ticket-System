@@ -59,7 +59,7 @@
 		 if(!$this->CONFIRM_USER($N,$PS,$Con)){         // Returns True : User exists, Shouldn't add him.
 			 $Con->query("Insert into `ticketsystem`.`tbl_user`  
 			  values('$N','$IN','$S','$PS','$R')");
-			   return " <p class='confirmation_message'>User created</p>";
+			   echo " <p class='confirmation_message'>User created</p>";
 			}else{ return "<p class='confirmation_message'>User already exist.</p>";} 
 	   }  	 
 
@@ -97,6 +97,10 @@
 		 return $this->Surname;
 	 }
  
+     public function ID(){
+		 return $this->ID;
+	 } 
+ 
      public function IN(){
 		 return $this->Initials;
 	 } 
@@ -131,7 +135,7 @@
 		  return $User_arr;
 	  } 
 
-	  public function UPDATE_USER($N,$IN,$S,$R,$PS ,$Prv_name,$Prv_password,$Con){
+	  public function UPDATE_USER($N,$IN,$S,$R,$PS ,$Prv_name,$Con){
 		 $N = Sanitize($N); 
 		 $S =  Sanitize($S);
 		 $R = Sanitize($R);
@@ -141,16 +145,15 @@
 		 $Prv_password = SANITIZE($Prv_password);
 		 /* Update Tech name. initials*/
 		 
-		 if($this->CONFIRM_USER($Prv_name,$Prv_password,$Con)){
-			$Con->query("UPDATE `ticketsystem`.`tbl_user` 
+		 //if($this->CONFIRM_USER($Prv_name,$Prv_password,$Con)){
+			if($Con->query("UPDATE `ticketsystem`.`tbl_user` 
 		    SET username = '$N', 
 			initials = '$IN',
 			surname = '$S', 
 			role = '$R', 
 			password = '$PS' 
-			WHERE (username = '$Prv_name' 
-			 OR surname = '$Prv_name') 
-			 AND password = '$PS' ") ;
+			WHERE username = '$Prv_name' 
+			 OR surname = '$Prv_name' ")){
 			 return "<p class='confirmation_message'>Process updated.</p>";
 			}else{return "<p class='confirmation_message'>Process failed updated.</p>";}
 	 } 
@@ -303,8 +306,8 @@
 				  $Con->query("Insert into 
 				  `ticketsystem`.`tbl_cp`
 			   values('$ID','$chk_name')"); 
-			   return "<p class='confirmation_message'>Check point created.</p>";
-			  } else {return "<p class='confirmation_message'> Checkpoint not created.</p>";}
+			   return "<p class='lblsuccess'>Check point created.</p>";
+			  } else {return "<p class='lbldanger'> Checkpoint not created.</p>";}
 			    
 	 }
  
@@ -320,12 +323,9 @@
 		   its name and site where it is' id.*/
 		 
 		 if($this->CONFIRM_CHECKPOINT($chk_name,$Con)){ 
-		    $Con->query("UPDATE `ticket_system`.`checkpoints` 
-		       SET point_name = '$chk_name' ,
-				    site_id = '$site_id',
-					point_desc = '$chk_desc'
-			   WHERE point_name = '$chk_name'
-			   AND site_id = '$prv_site_id ' ");
+		    $Con->query("UPDATE `ticketsystem`.`tbl_cp` 
+		       SET cp_name = '$chk_name' ,
+			   WHERE cp_name = '$chk_name'");
 			 echo "<br> Point Updated";
 		 }else {echo "<br> Point not updated.";}
 		  
@@ -337,8 +337,8 @@
 			 the name and password were initiated, And also set the initials of the 
 			 User.*/
 		    $Res = $Con->query("select * from
-			`ticketingsystem`.`point` 
-		     where point_name = '$chk_name' ");
+			`ticketsystem`.`tbl_cp` 
+		     where cp_name = '$chk_name' ");
 		    
 			//True if user exits
 			//False if user doesn't exists 
@@ -428,8 +428,8 @@
 		 if(!$this->CONFIRM_SITE($site_name,$Con)){
 			 $Con->query("Insert into `ticketsystem`.`tbl_site` 
 		   values('$ID','$site_name')"); 
-		   echo "<br> Site created";
-		 }else{echo "<br> SIte already created";}
+		   return "<p class='lblsuccess'> Site created.</p>";
+		 }else{return "<p class='lbldanger'> Site already created.</p>";}
 	 }
 	
 	public function UPDATE_SITE($site_name,$Prv_name,$Con){
@@ -452,7 +452,7 @@
 		  with correct infor.*/
 		 if($this->CONFIRM_SITE($site_name,$Con)){
 			 $Res = $Con->query("select * from 
-			  `ticketingsystem`.`tbl_site` 
+			  `ticketsystem`.`tbl_site` 
 		     WHERE site_name = '".$site_name."'"); 
 			 
 			 while($col = $Res->fetch_row()){ 
@@ -478,7 +478,16 @@
  
  }
  
- Class ASSIGN_TECH{ 
+ Class ASSIGN_TECH{  
+  
+	  private $T_no;
+	  private $Site;
+	  private $CP;
+	  private $P;
+	  private $T;
+	  private $CRO;
+	  private $Sol;
+	  private $D_T;
 	 
 	 public function __construct(){}
 	 
@@ -513,7 +522,7 @@
 	 }
 
 	 
- private function CONFIRM_DEPENDENCES($TK,$Con){ 
+      private function CONFIRM_DEPENDENCES($TK,$Con){ 
      $Res = $Con->query("select ticket_no from 
 		 `ticketsystem`.`tbl_ticket` 
 			WHERE	ticket_no = '$TK' ");  
@@ -523,31 +532,31 @@
 		 }else {return false;}  
 	 } 
 	 
-	 public function CREATE_TICKET($UID,$TID,$PID,$SID,$PRO_DESC,$SOL_DESC,$Con){
-		 $UID = SANITIZE($UID);
-		 $TID = SANITIZE($TID);
-		 $PID = SANITIZE($PID);
-		 $SID = SANITIZE($SID);
-		 $PRO_DESC = SANITIZE($PRO_DESC);
-		 $SOL_DESC = SANITIZE($SOL_DESC);
+	 public function CREATE_TICKET($SID,$PID,$PRO_DESC,$TECHID,$CRO,$SOL_DESC,$Con){
+		$CRO = SANITIZE($CRO);
+		$TECHID = SANITIZE($TECHID);
+		$PID = SANITIZE($PID);
+		$SID = SANITIZE($SID);
+		$PRO_DESC = SANITIZE($PRO_DESC);
+		$SOL_DESC = SANITIZE($SOL_DESC);
+	   
+		$ticket_no = $this->GENERATE_TICKET_NO($Con);  
+		if(!$this->CONFIRM_DEPENDENCES($ticket_no,$Con)){
+			if($Con->query("Insert into `ticketsystem`.`tbl_ticket` 
+		  values('$ticket_no','$SID','$PID','$PRO_DESC','$TECHID', '$CRO'
+		  ,'$SOL_DESC','".date("d/m/Y")." ','".date("H:i:s a")."','OPEN') ")){
+			  return "<p class='lblsuccess'> ticket created.</p>";
+		  }else{return "<p class='lbldanger'>ticket not created.</p>";}
+		} echo "not entered into tickets;";
 		
-		 $ticket_no = $this->GENERATE_TICKET_NO($Con);
-		 
-		// if($this->CONFIRM_DEPENDENCES($UID,$TID,$PID,$Con)){
-			 if($Con->query("Insert into `ticketsystem`.`tbl_ticket` 
-		   values('$ticket_no','$SID','$PID','$PRO_DESC','$TID','$UID','$SOL_DESC',' ".date("d/m/Y")." ',
-		   '".date("H:i:s a")."','open' )") ){
-			   return "<p class='lbldanger'> ticket created.</p>";
-		   }else{return "<p class='lblsuccess'>ticket not created.</p>";}
-		// }
-		 
-	 }
+	}
 
-	 public function UPDATE_TICKET($solution,$site,$Tech,$Point,$PRO_DESC,$Prv_ticket_no,$Con){
+	 public function UPDATE_TICKET($solution,$site,$Tech,$Point,$PRO_DESC,
+	 $Prv_ticket_no,$Con){
 		 //$User = SANITIZE($User);
 		 $Tech = SANITIZE($Tech);
 		 $Point = SANITIZE($Point); 
-		 $site = SANITIZE($site); 
+		 $site = SANITIZE($site);  
 		 $PRO_DESC = SANITIZE($PRO_DESC);
 		 $Prv_ticket_no = SANITIZE($Prv_ticket_no);  
 		 
@@ -573,8 +582,7 @@
 		  OR `ticket_number` = '$CRO_AS_ID' ")){
 			  echo "Deleted row.";
 		  }else{echo "Not deleted.";}
-	   }
-	 
+	   }	 
 	
 	public function FILTER_BY_DATE($First_date,$Sec_date,$Con){
 		$First_date = SANITIZE($First_date);
@@ -663,10 +671,96 @@
 			  } 
 			  return $check_point; 
 	 }
- 
     
- }
+	public function INITIALIZE_TICKET($TID,$Con){  
+			 $Res = $Con->query("
+			   select * from 
+			  `ticketsystem`.`tbl_ticket` 
+		     WHERE ticket_no = '".$TID."' ");  
+			 
+			 while($col = $Res->fetch_row()){ 
+				 $this->Site = $col[1]; 
+				$this->CP = $col[2];
+				 $this->P = $col[3]; 
+				 $this->T = $col[4]; 
+				$this->CRO = $col[5];
+				 $this->Sol = $col[6];
+				$this->T_no = $col[0];
+				 $this->D_T = $col[8]." ".$col[7]; 
+			 } 
+			 echo "INITIALIZE wasn't successful.";
+		 //} 
+	}
 
+  
+     public function TICKET_D_T(){
+	       return $this->D_T;	 
+	 }
+	 
+     public function TICKET_SOL(){
+	     return $this->Sol;	 
+	 }
+	 
+     public function TICKET_CRO(){
+		 return $this->CRO;
+	 }
+	
+     public function TICKET_PROBLEM(){
+		 return $this->P;
+	 }
+  
+     public function TICKET_NO(){
+		 return $this->T_no;
+	 }
+     
+     public function TICKET_SITE(){
+		 return $this->Site;
+	 }
+ 
+      public function TICKET_CHECKPOINT(){
+		  return $this->CP;
+	  }
+     
+	 public function TICKET_TECH(){
+		  return $this->T;
+	  }
+
+	  public function OPEN_CLOSE_TICKETS($View,$Con){
+		$View = SANITIZE($View);
+		$Res = $Con->query("select * from 
+		  `ticketsystem`.`tbl_ticket` 
+		    WHERE accessibility = '$View' ");
+		  
+		  $Fil_Open_Close_arr = array();
+			 while ($row = $Res->fetch_row()){
+				 array_push($Fil_Open_Close_arr,$row);
+			  } 
+			  return $Fil_Open_Close_arr;
+	}	
+	
+	public function FILTER_BY($FITER,$Con){
+		 $FITER = SANITIZE($FITER); 
+		  
+		$Res = $Con->query("select * from 
+		  `ticketsystem`.`tbl_ticket` 
+		    WHERE  ticket_no LIKE '%$FITER%' 
+			OR `cro` LIKE '%$FITER%'
+			OR `technician` LIKE '%$FITER%'
+			OR `site` LIKE '%$FITER%'
+			OR `check_point` LIKE '%$FITER%'
+			OR `accessibility` LIKE '%$FITER%'  
+			ORDER BY date ASC");
+		  
+		  $FT_arr = array();
+			 while ($row = $Res->fetch_row()){
+				 array_push($FT_arr,$row);
+			  } 		 
+		 return $FT_arr;
+	 }
+ 
+     
+ }
+ 
  function SANITIZE($V){
 		  /* Sanitize variables provide to avoid contamination of 
 		   Database.*/
@@ -675,7 +769,7 @@
 		  $V = stripslashes($V);
 		  $V = htmlentities($V);
 		  $V = nl2br($V);
-		 /* $V = mysqli_real_escape_string($V,$con);*/
+		  //$V = mysql_real_escape_string($V);
 		  
 		  return $V;
 	  }

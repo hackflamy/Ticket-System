@@ -236,10 +236,13 @@ input[type="text"] {
 .lbldanger {
     color: red;
     font-weight: bold;
+    align-self: center;
 }
 
 .lblsuccess {
     color: green;
+    font-weight: bold;
+    align-self: center;
 }
 
 .bghlogo {

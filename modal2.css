@@ -67,6 +67,16 @@ a:visited {
     visibility: visible;
 }
 
+#updateTicket:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+#updateTicket:target .modal-content {
+    opacity: 1;
+    visibility: visible;
+}
+
 #regcro:target {
     opacity: 1;
     visibility: visible;
@@ -163,26 +173,6 @@ a:visited {
 }
 
 #closetick:target .modal-content {
-    opacity: 1;
-    visibility: visible;
-}
-
-#updateTicket:target {
-    opacity: 1;
-    visibility: visible;
-}
-
-#updateTicket:target .modal-content {
-    opacity: 1;
-    visibility: visible;
-}
-
-#Deshboard:target {
-    opacity: 1;
-    visibility: visible;
-}
-
-#Deshboard:target .modal-content {
     opacity: 1;
     visibility: visible;
 }
