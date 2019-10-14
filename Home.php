@@ -114,7 +114,7 @@ if(isset($_REQUEST['usereditbtn'])){
         <nav class="main-menu">
             <ul class="">
                 <li>
-                    <a href="#"><i class="fa fa-home fa-2x"></i>
+                    <a href="#Deshboard"><i class="fa fa-home fa-2x"></i>
                     <span class="nav-text">Deshboard</span></a>
                 </li>
                 <li class="has-subnav">
@@ -173,17 +173,23 @@ if(isset($_REQUEST['usereditbtn'])){
     </div>
     <!-- sidebar ends-->
 
-    <!-- Dashbaord -->
-    
-<div class="bghlogo">
+
+
+
+    <div class="bghlogo">
 
 <img class="bghimg" src="https://20crxh33y0ym3k6p902yq4pg-wpengine.netdna-ssl.com/wp-content/uploads/2018/10/favicon.png" alt="Trulli" width="65" height="70">
 
 
 </div>
 
-
-    <div class="contentholder">
+    <div class="modal" id="Deshboard">
+        <div class="modal-content">
+        <div class="contentholder">
+            <a href="#" class="modal-close">&times;</a>
+            <p class="modal-body">
+                <h2 class="table-heading">All Tickets</h2>
+                <div class="contentholder">
     <div class="filter">
     <h2> From: <input type="date" class="dateinput" placeholder="Initials ">&nbsp   
     &nbsp     To: <input type="date" class="dateinput" placeholder="Last Name">
@@ -238,8 +244,15 @@ $result2 = mysqli_query($con,$sql2);
         </table>
 
     </div>
+            </p>
+            </div>
+        </div>
+    </div>
 
-    <!-- Dashbaord ends-->
+
+
+
+
 
     <!-- Dashbaord/View Ticket-->
 

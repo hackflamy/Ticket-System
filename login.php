@@ -41,8 +41,11 @@ if(isset($_POST['username'])){
 ?>
 
 
-<!DOCTYPE html>
 
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html class="no-js">
 <!--<![endif]-->
@@ -51,43 +54,51 @@ if(isset($_POST['username'])){
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
-
-    <script src="js/jquery-3.3.1.min.js"></script>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="login.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="test.css">
 </head>
 
 <body>
+    <img class="wave" src="img/favicon.png" alt="">
 
-    <form method="POST" action="#" class="login-form">
-        <h1>LOGIN</h1>
-        <div class="tbox">
-            <input type="text" name="username" id="">
-            <span data-placeholder="USERNAME"></span>
+    <div class="container">
+        <div class="img">
+
+        </div>
+        <div class="login-container">
+            <form method="POST" action="#">
+                <img class="bigimg" src="img/profile.png" alt="">
+                <img class="smimg" src="img/favicon.png" alt="">
+                <h2>Welcome</h2>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div>
+                        <h5>Unsername</h5>
+                        <input name="username" class="input" type="text">
+                    </div>
+                </div>
+                <div class="input-div two">
+                    <div class="i">
+                        <i class="fa fa-lock"></i>
+                    </div>
+                    <div>
+                        <h5>Password</h5>
+                        <input class="input" name="password" type="password">
+                    </div>
+                </div>
+                <a href="#"> <p class='lbldanger'>  <?php if(isset($_SESSION['massege'])){ echo  $_SESSION['massege'];$_SESSION['massege']=""; }  ?> </p></a>
+                <input class="btn" type="submit" value="Login">
+            </form>
         </div>
 
-        <div class="tbox">
-            <input type="password" name="password" id="">
-            <span data-placeholder="PASSWORD"></span>
-        </div>
-        <input type="submit" class="loginbtn" value="login">
-        <div class="bottom-text">
-        <p class='lbldanger'>  <?php if(isset($_SESSION['massege'])){ echo  $_SESSION['massege'];$_SESSION['massege']=""; }  ?> </p>
-            
-            Don't have an account contact admin
-        </div>
-    </form>
-
-    <script type="text/javascript">
-        $(".tbox input").on("focus", function() {
-            $(this).addClass("focus");
-        });
-        $(".tbox input").on("blur", function() {
-            if ($(this).val() == "")
-                $(this).removeClass("focus")
-        });
-    </script>
+    </div>
+    
+    <script type="text/javascript" src="js/style.js"></script>
 </body>
 
 </html>

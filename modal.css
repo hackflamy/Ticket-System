@@ -167,6 +167,16 @@ a:visited {
     visibility: visible;
 }
 
+#Deshboard:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+#Deshboard:target .modal-content {
+    opacity: 1;
+    visibility: visible;
+}
+
 .modal-close {
     color: #212121;
     font-size: 2em;
