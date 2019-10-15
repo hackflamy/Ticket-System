@@ -268,3 +268,46 @@ input[type="text"] {
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
 }
+
+.welcome {
+    position: absolute;
+    text-align: center;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.welcome h1 {
+    color: black;
+    font-family: fantasy;
+    font-size: 45px;
+}
+
+.welcome h2 {
+    color: #fff;
+    font-family: fantasy;
+    font-size: 30px;
+}
+
+.spn {
+    color: rgb(80, 2, 2);
+    font-size: 30px;
+}
+
+.tagline {
+    position: relative;
+    text-align: center;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.tagline p {
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+}
+
+.down a i {
+    font-size: 60px;
+    color: rgb(80, 2, 2);
+}

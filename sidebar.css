@@ -1,7 +1,10 @@
 body {
-    background-image: url(img/bg3.jpg);
+    background-image: url(img/53.jpg);
     background-size: cover;
     font-family: 'Acme', sans-serif, fantasy;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 .fa-2x {

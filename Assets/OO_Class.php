@@ -520,6 +520,26 @@
 		  } 
 		  return $Tickets_arr;
 	 }
+	 public function VIEW_OPEN_TICKETS($Con){
+		$Res = $Con->query("select * from 
+		  `ticketsystem`.`tbl_ticket` WHERE	accessibility = 'OPEN' OR accessibility = 'open'");
+		  
+		$Tickets_arr = array();
+		 while ($row = $Res->fetch_row()){
+			 array_push($Tickets_arr,$row);
+		  } 
+		  return $Tickets_arr;
+	 }
+	 public function VIEW_CLOSED_TICKETS($Con){
+		$Res = $Con->query("select * from 
+		  `ticketsystem`.`tbl_ticket` WHERE accessibility = 'CLOSED' OR accessibility = 'closed'");
+		  
+		$Tickets_arr = array();
+		 while ($row = $Res->fetch_row()){
+			 array_push($Tickets_arr,$row);
+		  } 
+		  return $Tickets_arr;
+	 }
 
 	 
       private function CONFIRM_DEPENDENCES($TK,$Con){ 
