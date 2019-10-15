@@ -103,6 +103,7 @@ require_once('control.php');
             <img class="bghimg" src="https://20crxh33y0ym3k6p902yq4pg-wpengine.netdna-ssl.com/wp-content/uploads/2018/10/favicon.png" alt="Trulli" width="65" height="70">
         </div>
         <!-- logo-->
+        
         <!-- welcome-->
         <div class="welcome">
             <h1> Welcome To <br><span class="spn">Burgh Group Holdings</span><br> <h2>Ticket System<h2></h1>
@@ -114,7 +115,6 @@ require_once('control.php');
              <a href="#Deshboard"><i class="fa fa-chevron-circle-down fa-lg"></i></a>
             </div>
         </div>
-
         <!-- welcome-->
 
         <div class="modal" id="Deshboard">
@@ -345,7 +345,6 @@ require_once('control.php');
         <!-- Update Ticket ends-->
 
         <!-- issue ticket -->
-
         <div class="modal" id="isuetick">
             <div class="modal-content">
                 <a href="#" class="modal-close">&times;</a>
@@ -485,6 +484,7 @@ require_once('control.php');
 
 
         <script type="text/javascript">
+
             $(".tbox input").on("focus", function() {
                 $(this).addClass("focus");
             });
@@ -494,26 +494,26 @@ require_once('control.php');
             });
 
             window.onload = setMenu;
-    function setMenu() {
-        var urole='<?php echo $usrole;?>';
-        if(urole=="CRO"){
-            var elmnt = document.getElementById("regcroli");
-    elmnt.remove();
-    var elmnt2 = document.getElementById("regtechli");
-    elmnt2.remove();
-    var elmnt3 = document.getElementById("addsiteli");
-    elmnt3.remove();
-    var elmnt4 = document.getElementById("addcpli");
-    elmnt4.remove();
-    var elmnt4 = document.getElementById("eduser");
-    elmnt4.remove();
-        }
+            function setMenu() {
+                    var urole='<?php echo $usrole;?>';
+                    if(urole=="CRO"){
+                        var elmnt = document.getElementById("regcroli");
+                        elmnt.remove();
+                        var elmnt2 = document.getElementById("regtechli");
+                        elmnt2.remove();
+                        var elmnt3 = document.getElementById("addsiteli");
+                        elmnt3.remove();
+                        var elmnt4 = document.getElementById("addcpli");
+                        elmnt4.remove();
+                        var elmnt4 = document.getElementById("eduser");
+                        elmnt4.remove();
+                    }
 
-    }
+            }
 
-    if(window.history.replaceState){
-        window.history.replaceState(null,null,window.location.href);
-    }
+            if(window.history.replaceState){
+                window.history.replaceState(null,null,window.location.href);
+            }
 
 
         </script>
