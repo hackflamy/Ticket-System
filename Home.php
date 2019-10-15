@@ -103,7 +103,7 @@ require_once('control.php');
             <img class="bghimg" src="https://20crxh33y0ym3k6p902yq4pg-wpengine.netdna-ssl.com/wp-content/uploads/2018/10/favicon.png" alt="Trulli" width="65" height="70">
         </div>
         <!-- logo-->
-        
+
         <!-- welcome-->
         <div class="welcome">
             <h1> Welcome To <br><span class="spn">Burgh Group Holdings</span><br> <h2>Ticket System<h2></h1>
@@ -303,7 +303,7 @@ require_once('control.php');
         <!-- close tecket ends-->
 
         <!-- update Ticket-->
-        <form method="POST" action="#" >
+   
             <div class="modal" id="modal">
                 <div class="modal-content">
                     <div class="contentholder">
@@ -337,11 +337,12 @@ require_once('control.php');
                             <p class="modal-body">
                                 <h2 class="table-heading">Alter Tickets</h2>
                                 <?php echo $edt_t; ?> 
+                                <p id="validationp" class="lbldanger"></p>
                                 </p>
                     </div>
                 </div>
             </div>
-        </form>
+       
         <!-- Update Ticket ends-->
 
         <!-- issue ticket -->
@@ -353,7 +354,7 @@ require_once('control.php');
                     <div class="cont-contactbtn">
                         <div class="cont-flip">
                             <div class="">
-                                <form method="POST" action="#isuetick" class="contact-form">
+                                <form method="POST" name="issiuetickform"action="#isuetick" onsubmit="return validateissiuetickForm()" class="contact-form">
                                     <input type="text" class="gutter" name="ticketno" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number" readonly>
                                     <select name="sites" class="gutter">
                                             <option value="">Select Site</option>
@@ -379,6 +380,7 @@ require_once('control.php');
                                     <textarea name="tickfeed" id="" placeholder="Ticket Feedback"></textarea>
                                     <input class="donebtn" name="btncreateticket" type="submit" value="Done">
                                     <?php echo $message;?>
+                                    <p id="validationp" class='lbldanger'></p>
                                 </form>
                             </div>
                         </div>
@@ -514,8 +516,29 @@ require_once('control.php');
             if(window.history.replaceState){
                 window.history.replaceState(null,null,window.location.href);
             }
+            function validateissiuetickForm() {
+            var x = document.forms["issiuetickform"]["tickdesc"].value;
+            if (x == "") {
+                document.getElementById("validationp").innerHTML = "Description must be filled out!";
+                return false;
+            }
+            }
+            function validateissiuetickForm() {
+            var x = document.forms["edittickform"]["edittickfeed"].value;
+            var y = document.forms["edittickform"]["edittickdesc"].value;  
+            if (x == "") {
+                document.getElementById("validationp").innerHTML = "Feedback must be filled out!";
+                return false;
+            }
+            else if(y == ""){
+                document.getElementById("validationp").innerHTML = "Description must be filled out!";
+                return false;
+            }
+           
+            }
 
 
+            
         </script>
     </body>
 

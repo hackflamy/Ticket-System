@@ -196,7 +196,7 @@ if(isset($_REQUEST['ticketeditbtn'])){
    $Ticket->INITIALIZE_TICKET($_REQUEST['ticketedit'],$con);
       
     $edt_t = '  
-	      <form method="POST" action="#updateTicket" class="contact-form">
+	      <form method="POST" name="edittickform" action="#updateTicket" class="contact-form">
                             <input type="text" class="gutter" 
 							  name="ticketno" value="'.$Ticket->TICKET_NO().'" readonly>
                                 
@@ -218,10 +218,11 @@ if(isset($_REQUEST['ticketeditbtn'])){
                                     '.$technician.'
                                   </select>
 								  
-                                <textarea name="tickdesc" id="" placeholder="Ticket Description">'.$Ticket->TICKET_PROBLEM().'</textarea>
-                                <textarea name="tickfeed" id="" placeholder="Ticket Feedback">'.$Ticket->TICKET_SOL().'</textarea>
+                                <textarea name="tickdesc" id="edittickdesc" placeholder="Ticket Description">'.$Ticket->TICKET_PROBLEM().'</textarea>
+                                <textarea name="tickfeed" id="edittickfeed" placeholder="Ticket Feedback">'.$Ticket->TICKET_SOL().'</textarea>
                                 <input class="donebtn" name="btnedit_ticket" type="submit" value="Done">
                                 <label ><?php echo $message;?></label>
+                               
 
                             </form>';
 }
