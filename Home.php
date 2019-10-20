@@ -356,27 +356,27 @@ require_once('control.php');
                             <div class="">
                                 <form method="POST" name="issiuetickform"action="#isuetick" onsubmit="return validateissiuetickForm()" class="contact-form">
                                     <input type="text" class="gutter" name="ticketno" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number" readonly>
-                                    <select name="sites" class="gutter">
+                                    <select name="sites" required  class="gutter">
                                             <option value="">Select Site</option>
                                             <option value="WB IN 1">Klip25</option>
                                             <option value="WB IN 2">TNDB</option>
                                             <option value="EXIT">Mooifontein</option>
                                             <option value="SECONDARY IN">Inyanda</option>
                                         </select>
-                                    <select name="checkpoints" class="gutter">
+                                    <select name="checkpoints" required  class="gutter">
                                         <option value="">Select Checkpoint</option>
                                         <option value="WB IN 1">WB IN 1</option>
                                         <option value="WB IN 2">WB IN 2</option>
                                         <option value="EXIT">EXIT</option>
                                         <option value="SECONDARY IN">SECONDARY IN</option>
                                     </select>
-                                    <select name="tech" class="gutter">
+                                    <select name="tech" required  class="gutter">
                                         <option value="">Select Technician</option>
                                         <option value="WB IN 1">Tendani</option>
                                         <option value="WB IN 2">Ashley</option>
                                         <option value="EXIT">Charel</option>
                                         <option value="SECONDARY IN">Danova</option>
-                                    <textarea name="tickdesc" id="" pattern=".{20,}" placeholder="Ticket Description"></textarea>
+                                    <textarea name="tickdesc" required  id="" pattern=".{20,}" placeholder="Ticket Description"></textarea>
                                     <textarea name="tickfeed" id="" placeholder="Ticket Feedback"></textarea>
                                     <input class="donebtn" name="btncreateticket" type="submit" value="Done">
                                     <?php echo $message;?>
@@ -400,11 +400,11 @@ require_once('control.php');
                         <div class="cont-flip">
                             <div class="">
                                 <form method="POST" action="#regcro" class="contact-form">
-                                    <input type="text" name="crousername" pattern="[a-z0-9._%+-]+@[a-z0-9.-]{2,}$" title="Hint: example@BGH" class="gutter" placeholder="username ">
-                                    <input type="text" name="croinitials" pattern=".{1,}" title="One or more characters" class="gutter" placeholder="Initials ">
-                                    <input type="text" name="crolastname" pattern=".{4,}" title="One or more characters" class="gutter" placeholder="Last Name">
-                                    <input type="password" name="cropwd" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Hint: exampleBGH"  placeholder="password">
-                                    <input type="password" name="crocpwd"  placeholder="confirm password">
+                                    <input type="text" required  name="crousername" pattern="[a-z0-9._%+-]+@[a-z0-9.-]{2,}$" title="Hint: example@BGH" class="gutter" placeholder="username ">
+                                    <input type="text" required  name="croinitials" pattern=".{1,}" title="One or more characters" class="gutter" placeholder="Initials ">
+                                    <input type="text" required  name="crolastname" pattern=".{4,}" title="One or more characters" class="gutter" placeholder="Last Name">
+                                    <input type="password" required  name="cropwd" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Hint: exampleBGH"  placeholder="password">
+                                    <input type="password" required  name="crocpwd"  placeholder="confirm password">
                                     <input class="donebtn" type="submit" name="regcrobtn" value="Done">
                                     <label ><?php echo $message;?></label>
                                 </form>
@@ -426,7 +426,7 @@ require_once('control.php');
                         <div class="cont-flip">
                             <div class="">
                                 <form method="POST" action="#regtech" class="contact-form">
-                                    <input type="text" class="single"name="techusername"  placeholder="username ">
+                                    <input type="text"required  class="single"name="techusername"  placeholder="username ">
                                     <input class="donebtn" type="submit" name="regtechbtn" value="Done">
                                     <label ><?php echo $message;?></label>
                                     
@@ -449,7 +449,7 @@ require_once('control.php');
                         <div class="cont-flip">
                             <div class="">
                                 <form method="POST" action="#regmn" class="contact-form">
-                                    <input type="text" class="single"name="minename" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Mina Name">
+                                    <input type="text" required  class="single"name="minename" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Mina Name">
                                     <input class="donebtn" name="addminebtn" type="submit" value="Done">
                                     <?php echo $message;?>
                                 </form>
@@ -471,7 +471,8 @@ require_once('control.php');
                         <div class="cont-flip">
                             <div class="">
                                 <form method="POST" action="#regcp" class="contact-form">
-                                    <input type="text" class="single" name="cpname" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Check Point Name">
+                                    <input type="text" class="gutter" required name="cpname" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Check Point Name">
+                                    <input type="text" class="gutter" required name="sitename" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Site Name">
                                     <input class="donebtn" name="addcpbtn" type="submit" value="Done">
                                     <?php echo $message;?>
                                 </form>
