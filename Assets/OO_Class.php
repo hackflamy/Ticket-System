@@ -296,8 +296,9 @@
 		  return $ChkPt_arr;
 	 }
 	 
-	 public function CREATE_CHECKPOINT($chk_name,$Con){
+	 public function CREATE_CHECKPOINT($chk_name,$chk_site_id,$Con){
 		 $chk_name = Sanitize($chk_name);
+		 $chk_site_id = Sanitize($chk_site_id);
 		 $ID = $chk_name."-".rand(0,999999);
 		 
 		 /*Code. Verify whether such site id is available.*/
@@ -305,7 +306,7 @@
 			  if(!$this->CONFIRM_CHECKPOINT($chk_name,$Con)){
 				  $Con->query("Insert into 
 				  `ticketsystem`.`tbl_cp`
-			   values('$ID','$chk_name')"); 
+			   values('$ID','$chk_name','$chk_site_id')"); 
 			   return "<p class='lblsuccess'>Check point created.</p>";
 			  } else {return "<p class='lbldanger'> Checkpoint not created.</p>";}
 			    
@@ -520,27 +521,52 @@
 		  } 
 		  return $Tickets_arr;
 	 }
-	 public function VIEW_OPEN_TICKETS($Con){
-		$Res = $Con->query("select * from 
-		  `ticketsystem`.`tbl_ticket` WHERE	accessibility = 'OPEN' OR accessibility = 'open'");
-		  
-		$Tickets_arr = array();
-		 while ($row = $Res->fetch_row()){
-			 array_push($Tickets_arr,$row);
-		  } 
-		  return $Tickets_arr;
-	 }
-	 public function VIEW_CLOSED_TICKETS($Con){
-		$Res = $Con->query("select * from 
-		  `ticketsystem`.`tbl_ticket` WHERE accessibility = 'CLOSED' OR accessibility = 'closed'");
-		  
-		$Tickets_arr = array();
-		 while ($row = $Res->fetch_row()){
-			 array_push($Tickets_arr,$row);
-		  } 
-		  return $Tickets_arr;
-	 }
 
+	 public function OPEN_TICKETS($Con){
+		$Res = $Con->query("select * from 
+		  `ticketsystem`.`tbl_ticket` 
+		  WHERE	accessibility = 'OPEN' 
+		  OR accessibility = 'open'");
+		  
+		$Tickets_arr = array();
+		 while ($row = $Res->fetch_row()){
+			 array_push($Tickets_arr,$row);
+		  } 
+		  return $Tickets_arr;
+	 }
+	
+	public function CLOSE_TICKETS($Con){
+		$Res = $Con->query("select * from 
+		  `ticketsystem`.`tbl_ticket` 
+		  WHERE accessibility = 'CLOSE' ");
+		  
+		$Tickets_arr = array();
+		 while ($row = $Res->fetch_row()){
+			 array_push($Tickets_arr,$row);
+		  } 
+		  return $Tickets_arr;
+	 }
+   
+    public function OPEN_CLOSE_TICKETS($View,$Element,$Con){
+		$View = SANITIZE($View);
+		$Element = SANITIZE($Element);
+		$Res = $Con->query("select * from 
+		  `ticketsystem`.`tbl_ticket` 
+		    WHERE accessibility = '$View' 
+			AND (`cro` LIKE '%$Element%'
+			OR `technician` LIKE '%$Element%'
+			OR `site` LIKE '%$Element%'
+			OR `check_point` LIKE '%$Element%'
+			OR `accessibility` LIKE '%$Element%' ) 
+			ORDER BY date ASC");
+		  
+		  $Fil_Open_Close_arr = array();
+			 while ($row = $Res->fetch_row()){
+				 array_push($Fil_Open_Close_arr,$row);
+			  } 
+			  return $Fil_Open_Close_arr;
+	}	
+	
 	 
       private function CONFIRM_DEPENDENCES($TK,$Con){ 
      $Res = $Con->query("select ticket_no from 
@@ -578,16 +604,34 @@
 		 $Point = SANITIZE($Point); 
 		 $site = SANITIZE($site);  
 		 $PRO_DESC = SANITIZE($PRO_DESC);
-		 $Prv_ticket_no = SANITIZE($Prv_ticket_no);  
-		 
-		 if($this->CONFIRM_DEPENDENCES($Prv_ticket_no,$Con)){
-			$Res = $Con->query("UPDATE `tbl_ticket` 
+		 $Prv_ticket_no = SANITIZE($Prv_ticket_no);    
+		
+		
+        /*Code. Below should verify whether there is something in 
+		    feedback variable, so order can be know to close or open.*/
+		 if(!empty($solution) and strlen($solution) > 0){
+			 $sql = "UPDATE `tbl_ticket` 
 								 SET `solution`= '$solution',
 									  `check_point` = '$Point',
 									  `technician` = '$Tech', 
 									  `problem` = '$PRO_DESC', 
-									  `site` = '$site'
-									   WHERE `ticket_no` = '$Prv_ticket_no' "); 
+									  `site` = '$site',
+									   accessibility = 'CLOSE'
+									   WHERE `ticket_no` = '$Prv_ticket_no' ";
+		 }else{
+			 $sql = "UPDATE `tbl_ticket` 
+								 SET `solution`= '$solution',
+								     `check_point` = '$Point',
+									  `technician` = '$Tech', 
+									  `problem` = '$PRO_DESC', 
+									  `site` = '$site',
+									   accessibility = 'OPEN'
+									   WHERE `ticket_no` = '$Prv_ticket_no' "; 
+		 }
+		 
+		 
+		 if($this->CONFIRM_DEPENDENCES($Prv_ticket_no,$Con)){
+			$Res = $Con->query($sql); 
  
 			  return "<p class='confirmation_message'>Ticket has been updated.</p>";
 		 }else{return "<p class='confirmation_message'>Ticket not updated.</p>";}
@@ -604,6 +648,28 @@
 		  }else{echo "Not deleted.";}
 	   }	 
 	
+	public function FILTER_BY($FITER,$Con){
+		 $FITER = SANITIZE($FITER); 
+		  
+		$Res = $Con->query("select * from 
+		  `ticketsystem`.`tbl_ticket` 
+		    WHERE  ticket_no LIKE '%$FITER%' 
+			OR `cro` LIKE '%$FITER%'
+			OR `technician` LIKE '%$FITER%'
+			OR `site` LIKE '%$FITER%'
+			OR `check_point` LIKE '%$FITER%'
+			OR `accessibility` LIKE '%$FITER%'  
+			ORDER BY date ASC");
+		  
+		  $FT_arr = array();
+			 while ($row = $Res->fetch_row()){
+				 array_push($FT_arr,$row);
+			  } 		 
+		 return $FT_arr;
+	 }
+ 
+     
+ 
 	public function FILTER_BY_DATE($First_date,$Sec_date,$Con){
 		$First_date = SANITIZE($First_date);
 		$Sec_date = SANITIZE($Sec_date);
@@ -745,39 +811,6 @@
 		  return $this->T;
 	  }
 
-	  public function OPEN_CLOSE_TICKETS($View,$Con){
-		$View = SANITIZE($View);
-		$Res = $Con->query("select * from 
-		  `ticketsystem`.`tbl_ticket` 
-		    WHERE accessibility = '$View' ");
-		  
-		  $Fil_Open_Close_arr = array();
-			 while ($row = $Res->fetch_row()){
-				 array_push($Fil_Open_Close_arr,$row);
-			  } 
-			  return $Fil_Open_Close_arr;
-	}	
-	
-	public function FILTER_BY($FITER,$Con){
-		 $FITER = SANITIZE($FITER); 
-		  
-		$Res = $Con->query("select * from 
-		  `ticketsystem`.`tbl_ticket` 
-		    WHERE  ticket_no LIKE '%$FITER%' 
-			OR `cro` LIKE '%$FITER%'
-			OR `technician` LIKE '%$FITER%'
-			OR `site` LIKE '%$FITER%'
-			OR `check_point` LIKE '%$FITER%'
-			OR `accessibility` LIKE '%$FITER%'  
-			ORDER BY date ASC");
-		  
-		  $FT_arr = array();
-			 while ($row = $Res->fetch_row()){
-				 array_push($FT_arr,$row);
-			  } 		 
-		 return $FT_arr;
-	 }
- 
      
  }
  

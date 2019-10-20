@@ -45,8 +45,31 @@ $Tech = new TECHNICIAN();
 $S = new SITE();
 $Site = new SITE();
 $technician = ''; $s = ''; $cpp = '';$re_ticket="";$filterdata="<tbody>";$filtalltick="<tbody>"; $filtopentick="<tbody>";$filtclosedtick="<tbody>";
-
+$site_option = "";
+$tech_option="";
+$cp_option = "";$CP_site="";
+ 
 /* New CODE!!!*/
+
+/*Code. 
+    Needs to retrieve checkpoint ,site,and Tech data.*/
+  /*Begin Get all elements of tickets*/
+   foreach($Tech->VIEW_ALL_TECH($con) as $T){
+	    $technician .= "<option value='".$T[1]."'>".$T[1]."</option>";
+   }
+   foreach($Site->VIEW_ALL_SITE($con) as $S){
+	    $s .= "<option value='".$S[1]."'>".$S[1]."</option>";
+   }
+   foreach($CP->VIEW_ALL_CHECKPOINT($con) as $Cp){
+	    $cpp .= "<option value='".$Cp[1]."'>".$Cp[1]."</option>";
+   }
+/* Code is for site at checkpoint to get mine id rather than the above which is the 
+     only get site names*/
+   foreach($Site->VIEW_ALL_SITE($con) as $S){
+    $CP_site .= "<option value='".$S[0]."'>".$S[1]."</option>";
+}
+
+
 /* Code.
      this code accurately designate the chosen  user's infor to be edited,and save the alter infor.*/
      /* code for all Ticket !!!*/
@@ -87,7 +110,7 @@ $technician = ''; $s = ''; $cpp = '';$re_ticket="";$filterdata="<tbody>";$filtal
 
 /* code for open Ticket !!!*/
       if(isset($_REQUEST['searchopenbtn'])){
-        foreach($Ticket->FILTER_BY($_REQUEST['searchopen'],$con)as $filterall) {
+        foreach($Ticket->OPEN_CLOSE_TICKETS("OPEN",$_REQUEST['searchopen'],$con)as $filterall) {
             $filtopentick.= "<tr> <td>".$filterall[0]."</td>
          <td>".$filterall[1]."</td>
          <td>".$filterall[2]."</td>
@@ -102,7 +125,7 @@ $technician = ''; $s = ''; $cpp = '';$re_ticket="";$filterdata="<tbody>";$filtal
       }
       else{
           
-        foreach($Ticket->VIEW_OPEN_TICKETS($con) as $tt){ 
+        foreach($Ticket->FILTER_BY("OPEN",$con) as $tt){ 
 		  
             $filtopentick .="<tr>
                                 <td>".$tt[0]."</td>
@@ -123,22 +146,23 @@ $technician = ''; $s = ''; $cpp = '';$re_ticket="";$filterdata="<tbody>";$filtal
 
 /* code for closed ticket */
 if(isset($_REQUEST['searchclosedbtn'])){
-    foreach($Ticket->FILTER_BY($_REQUEST['searchclosed'],$con)as $filterall) {
+    foreach(
+	$Ticket->OPEN_CLOSE_TICKETS("CLOSE",$_REQUEST['searchclosed'],
+	   $con)as $filterall) {
         $filtclosedtick.= "<tr> <td>".$filterall[0]."</td>
-     <td>".$filterall[1]."</td>
-     <td>".$filterall[2]."</td>
-     <td>".$filterall[3]."</td>
-     <td>".$filterall[4]."</td>
-     <td>".$filterall[5]."</td>
-     <td>".$filterall[6]."</td>
-     <td>".$filterall[7]."</td>
-     <td>".$filterall[8]."</td><tr>";
-                 
-    }
+			 <td>".$filterall[1]."</td>
+			 <td>".$filterall[2]."</td>
+			 <td>".$filterall[3]."</td>
+			 <td>".$filterall[4]."</td>
+			 <td>".$filterall[5]."</td>
+			 <td>".$filterall[6]."</td>
+			 <td>".$filterall[7]."</td>
+			 <td>".$filterall[8]."</td><tr>"; 				 
+      }
   }
   else{
       
-    foreach($Ticket->VIEW_CLOSED_TICKETS($con) as $tt){ 
+    foreach($Ticket->FILTER_BY("CLOSE",$con) as $tt){ 
       
         $filtclosedtick .="<tr>
                             <td>".$tt[0]."</td>
@@ -191,35 +215,44 @@ foreach($Ticket->VIEW_ALL_TICKETS($con) as $tt){
 }
      }
      $filterdata.="</tbody>";
+	 
+	
+   
+/* End all elements fo tickets*/
+	 
+$edt_t = "<div class='message_edttickt'>
+        <h2 > PLEASE 
+		   RECHOOSE YOUR PREFERED TICKET.</h2>
+		</DIV>";
 if(isset($_REQUEST['ticketeditbtn'])){
     
    $Ticket->INITIALIZE_TICKET($_REQUEST['ticketedit'],$con);
-      
+        
     $edt_t = '  
-	      <form method="POST" name="edittickform" action="#updateTicket" class="contact-form">
+	      <form method="POST" name="edittickform" action="#modal" class="contact-form">
                             <input type="text" class="gutter" 
-							  name="ticketno" value="'.$Ticket->TICKET_NO().'" readonly>
+							  name="ticketno"  value="'.$Ticket->TICKET_NO().'" readonly>
                                 
 							<input type="text" class="gutter" 
 							  name="ticketcro" value="'.$Ticket->TICKET_CRO().'" readonly>
                                 
-                                <select name="sites" class="gutter">
-								        <option value="'.$Ticket->TICKET_CHECKPOINT().'">'.$Ticket->TICKET_CHECKPOINT().'</option>
+                                <select required name="sites" class="gutter" ">
+								        <option  value="'.$Ticket->TICKET_CHECKPOINT().'">'.$Ticket->TICKET_CHECKPOINT().'</option>
                                         '.$s.'
 								 </select>
 									  
-                                <select name="checkpoints" class="gutter">
+                                <select required name="checkpoints" class="gutter">
                                     <option value="'.$Ticket->TICKET_SITE().'">'.$Ticket->TICKET_SITE().'</option>
                                      '.$cpp.'
 								   </select>
 								  
-                                <select name="tech" class="gutter">
+                                <select required name="tech" class="gutter">
                                     <option value="'.$Ticket->TICKET_TECH().'">'.$Ticket->TICKET_TECH().'</option>
                                     '.$technician.'
                                   </select>
 								  
-                                <textarea name="tickdesc" id="edittickdesc" placeholder="Ticket Description">'.$Ticket->TICKET_PROBLEM().'</textarea>
-                                <textarea name="tickfeed" id="edittickfeed" placeholder="Ticket Feedback">'.$Ticket->TICKET_SOL().'</textarea>
+                                <textarea required name="tickdesc" id="edittickdesc" placeholder="Ticket Description">'.$Ticket->TICKET_PROBLEM().'</textarea>
+                                <textarea required name="tickfeed" id="edittickfeed" placeholder="Ticket Feedback">'.$Ticket->TICKET_SOL().'</textarea>
                                 <input class="donebtn" name="btnedit_ticket" type="submit" value="Done">
                                 <label ><?php echo $message;?></label>
                                
@@ -248,18 +281,7 @@ $re_ticket .="</tbody>";
 /* End Edit users Code*/
 
 
-/*Begin Get all elements of tickets*/
-   foreach($Tech->VIEW_ALL_TECH($con) as $T){
-	    $technician .= "<option value='".$T[1]."'>".$T[1]."</option>";
-   }
-   foreach($S->VIEW_ALL_SITE($con) as $S){
-	    $s .= "<option value='".$S[1]."'>".$S[1]."</option>";
-   }
-   foreach($CP->VIEW_ALL_CHECKPOINT($con) as $Cp){
-	    $cpp .= "<option value='".$Cp[1]."'>".$Cp[1]."</option>";
-   }
-   
-/* End all elements fo tickets*/
+
 
 $message="";$re_uers='';$eadt_user='';
 if(isset($_REQUEST['btncreateticket']))               
@@ -269,8 +291,8 @@ if(isset($_REQUEST['btncreateticket']))
 if(isset($_REQUEST['addminebtn'])){
     $message= $Site->CREATE_SITE($_REQUEST['minename'],$con);
 }
-if(isset($_REQUEST['addcpbtn'])){
-    $message= $CP->CREATE_CHECKPOINT($_REQUEST['cpname'],$con);
+if(isset($_REQUEST["addcpbtn"])){
+    $CP->CREATE_CHECKPOINT($_REQUEST["cpname"], $_REQUEST["cpsites"],$con);
 }
 
 
@@ -317,11 +339,11 @@ if(isset($_REQUEST['usereditbtn'])){
     $user->INITIALIZE_USER($_REQUEST['useredit'],$con);
 	$_SESSION["Previous_name"] = $user->NAME();
     $edt_user = '<form method="POST" action="#edituser" class="contact-form">
-       <input type="text" name="crousername" class="gutter" placeholder="username " value="'.$user->NAME().'">
-      <input type="text" name="croinitials" class="gutter" placeholder="Initials " value="'.$user->IN().'">
-     <input type="text" name="crolastname" class="gutter" placeholder="Last Name" value="'.$user->SURNAME().'">
-     <input type="password" name="cropwd"  placeholder="password" value="'.$user->PASSWORD().'"> 
-     <select type="password" name="crorole">
+       <input type="text" required name="crousername" class="gutter" placeholder="username " value="'.$user->NAME().'">
+      <input type="text" required name="croinitials" class="gutter" placeholder="Initials " value="'.$user->IN().'">
+     <input type="text" required name="crolastname" class="gutter" placeholder="Last Name" value="'.$user->SURNAME().'">
+     <input type="password" required name="cropwd"  placeholder="password" value="'.$user->PASSWORD().'"> 
+     <select type="password" required name="crorole">
 	     <option value="CRO">Control room</option>
 		 <option value="admin">Admin</option>
 	 </select> <br>
@@ -345,7 +367,10 @@ foreach($Ticket->VIEW_ALL_TICKETS($con) as $tt){
 						<td>".$tt[4]."</td>
 						<td>".$tt[5]."</td>
 						<td>".$tt[6]."</td>
-						<td>
+						<td>".$tt[7]."</td>
+						<td>".$tt[8]."</td>
+						<td>".$tt[9]."</td>
+						<td style='border:0px white solid;background-color:white;'>
 						   <form></form>
 							<form action='#updateTicket' method='POST'>
 								<input type='hidden' name='ticketedit' value='".$tt[0]."'>
@@ -356,6 +381,8 @@ foreach($Ticket->VIEW_ALL_TICKETS($con) as $tt){
 }
 
 $re_uers .= "</tbody>";
+
+
 
 /* NEW CODE!!! */
 

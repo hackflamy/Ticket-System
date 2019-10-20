@@ -19,16 +19,29 @@ require_once('control.php');
         <script src="bootstrap/js/bootstrap.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
         <script src="js/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/css?family=Acme&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="sidebar.css">
         <link rel="stylesheet" href="modal.css">
         <link rel="stylesheet" href="ussueticket.css">
-        <link rel="stylesheet" href="style.css">
-        
-
-
-
+        <link rel="stylesheet" href="style.css"> 
+          <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+       <style>
+		   .edittickform select option:first-child {
+			   background-color:lightcoral;
+			 } 
+			 
+			 .message_edttickt h2{
+				 color:darkred;
+				 text-align:center;
+             }
+             .password, .con_password{
+                   -webkit-transition: background 2s; /* For Safari 3.1 to 6.0 */
+                    transition: background 2s;
+             }
+			 
+       </style> 
     </head>
 
     <body>
@@ -128,20 +141,20 @@ require_once('control.php');
                                 <h2> From: <input type="date" name="startdate" class="dateinput" placeholder="Initials ">&nbsp   
                                     &nbsp     To: <input type="date" name="enddate"lass="dateinput" placeholder="Last Name">
                                     <input class="searchbtn" name="searchbydate" type="submit" value="Search">
-                                    <input class="printbtn" type="submit" value="">
+                                    <button class="printbtn" onclick="PRINTING('Table_tickets')"></button>
                                 </h2>
                             </div>
                         </form>         
                         
-                        <table class="tickets">
+                        <table class="tickets" id="Table_tickets">
                             <tr>
                                 <th>Ticket Number</th>
                                 <th>Site</th>
                                 <th>Checkpoint</th>
                                 <th>Problem</th>
                                 <th>Technician</th>
-                                <th>issued by</th>
-                                <th>Sollution</th>
+                                <th>Operator</th>
+                                <th>Solution</th>
                                 <th>Date</th>
                                 <th>Time</th>
                             </tr>
@@ -163,16 +176,17 @@ require_once('control.php');
                             <div class="filter">
                                 <h2> <input type="textarea" name="searchall" class="ticketinput"  placeholder="Ticket Number, Technician, Site, Check point" >&nbsp   
                                 <input class="searchbtn" name="searchbtn" type="submit" value="Search">
-                                <input class="printbtn" type="submit" value=""> </h2>
+                                <button class="printbtn" onclick="PRINTING('Table_view')"></button>
+							</h2>
                             </div>
-                            <table class="tickets">
+                            <table class="tickets" id="Table_view">
                             <tr>
                             <th>Ticket Number</th>
                             <th>Site</th>
                             <th>Checkpoint</th>
                             <th>Description</th>
                             <th>Technician</th>
-                            <th>issued by</th>
+                            <th>Operator</th>
                             <th>Feedback</th>
                             <th>Date</th>
                             <th>Time</th>
@@ -243,10 +257,10 @@ require_once('control.php');
                         <div class="filter">
                             <h2> <input type="textarea" name="searchopen" class="ticketinput"  placeholder="Ticket Number, Technician, Site, Check point" >&nbsp   
                             <input class="searchbtn" name="searchopenbtn"type="submit" value="Search">
-                            <input class="printbtn" type="submit" value=""> </h2>
+                            <button class="printbtn" onclick="PRINTING('Table_tickets')"></button>
                         </div>
 
-                        <table class="tickets">
+                        <table class="tickets" id="Table_view">
                             <tr>
                             <th>Ticket Number</th>
                             <th>Site</th>
@@ -279,16 +293,16 @@ require_once('control.php');
                             <div class="filter">
                                 <h2> <input type="textarea" name="searchclosed" class="ticketinput"  placeholder="Ticket Number, Technician, Site, Check point" >&nbsp   
                                 <input class="searchbtn" name="searchclosedbtn" type="submit" value="Search">
-                                <input class="printbtn"  type="submit" value=""> </h2>
+                                <button class="printbtn" onclick="PRINTING('Table_tickets')"></button>
                             </div>
-                            <table class="tickets">
+                            <table class="tickets" id="Table_view">
                             <tr>
                             <th>Ticket Number</th>
                             <th>Site</th>
                             <th>Checkpoint</th>
                             <th>Description</th>
                             <th>Technician</th>
-                            <th>issued by</th>
+                            <th>Operator</th>
                             <th>Feedback</th>
                             <th>Date</th>
                             <th>Time</th>
@@ -310,14 +324,14 @@ require_once('control.php');
                         <a href="#" class="modal-close">&times;</a>
                         <p class="modal-body">
                             <h2 class="table-heading">Available Tickets</h2>
-                            <table class="tickets">
+                            <table class="tickets" id="Table_view">
                             <tr>
                             <th>Ticket Number</th>
                             <th>Site</th>
                             <th>Checkpoint</th>
                             <th>Description</th>
                             <th>Technician</th>
-                            <th>issued by</th>
+                            <th>Operator</th>
                             <th>Feedback</th>
                             <th>Date</th>  
                             <th>Time</th>
@@ -356,27 +370,18 @@ require_once('control.php');
                             <div class="">
                                 <form method="POST" name="issiuetickform"action="#isuetick" onsubmit="return validateissiuetickForm()" class="contact-form">
                                     <input type="text" class="gutter" name="ticketno" value="<?php echo $Ticket->GENERATE_TICKET_NO($con); ?>" placeholder="Ticket Number" readonly>
-                                    <select name="sites" required  class="gutter">
-                                            <option value="">Select Site</option>
-                                            <option value="WB IN 1">Klip25</option>
-                                            <option value="WB IN 2">TNDB</option>
-                                            <option value="EXIT">Mooifontein</option>
-                                            <option value="SECONDARY IN">Inyanda</option>
-                                        </select>
-                                    <select name="checkpoints" required  class="gutter">
-                                        <option value="">Select Checkpoint</option>
-                                        <option value="WB IN 1">WB IN 1</option>
-                                        <option value="WB IN 2">WB IN 2</option>
-                                        <option value="EXIT">EXIT</option>
-                                        <option value="SECONDARY IN">SECONDARY IN</option>
+                                    <select required name="sites" class="gutter">
+                                         <?php echo $s;?>
+									</select>
+									
+                                    <select required name="checkpoints" class="gutter">
+                                       <?php echo $cpp;?>
                                     </select>
-                                    <select name="tech" required  class="gutter">
-                                        <option value="">Select Technician</option>
-                                        <option value="WB IN 1">Tendani</option>
-                                        <option value="WB IN 2">Ashley</option>
-                                        <option value="EXIT">Charel</option>
-                                        <option value="SECONDARY IN">Danova</option>
-                                    <textarea name="tickdesc" required  id="" pattern=".{20,}" placeholder="Ticket Description"></textarea>
+                                    <select required name="tech" class="gutter">
+                                        <?php echo $technician; ?> 
+									</select>
+									
+                                    <textarea required name="tickdesc" id="" pattern=".{20,}" placeholder="Ticket Description"></textarea>
                                     <textarea name="tickfeed" id="" placeholder="Ticket Feedback"></textarea>
                                     <input class="donebtn" name="btncreateticket" type="submit" value="Done">
                                     <?php echo $message;?>
@@ -400,11 +405,11 @@ require_once('control.php');
                         <div class="cont-flip">
                             <div class="">
                                 <form method="POST" action="#regcro" class="contact-form">
-                                    <input type="text" required  name="crousername" pattern="[a-z0-9._%+-]+@[a-z0-9.-]{2,}$" title="Hint: example@BGH" class="gutter" placeholder="username ">
-                                    <input type="text" required  name="croinitials" pattern=".{1,}" title="One or more characters" class="gutter" placeholder="Initials ">
-                                    <input type="text" required  name="crolastname" pattern=".{4,}" title="One or more characters" class="gutter" placeholder="Last Name">
-                                    <input type="password" required  name="cropwd" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Hint: exampleBGH"  placeholder="password">
-                                    <input type="password" required  name="crocpwd"  placeholder="confirm password">
+                                    <input type="text" required name="crousername" pattern="[a-z0-9._%+-]+@[a-z0-9.-]{2,}$" title="Hint: example@BGH" class="gutter" placeholder="username ">
+                                    <input type="text" required name="croinitials" pattern=".{1,}" title="One or more characters" class="gutter" placeholder="Initials ">
+                                    <input type="text" required name="crolastname" pattern=".{4,}" title="One or more characters" class="gutter" placeholder="Last Name">
+                                    <input class ="password" type="password" required name="cropwd" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Hint: exampleBGH"  placeholder="password">
+                                    <input class="con_password" type="password" required name="crocpwd"  placeholder="confirm password">
                                     <input class="donebtn" type="submit" name="regcrobtn" value="Done">
                                     <label ><?php echo $message;?></label>
                                 </form>
@@ -426,7 +431,7 @@ require_once('control.php');
                         <div class="cont-flip">
                             <div class="">
                                 <form method="POST" action="#regtech" class="contact-form">
-                                    <input type="text"required  class="single"name="techusername"  placeholder="username ">
+                                    <input type="text" required class="single"name="techusername"  placeholder="username ">
                                     <input class="donebtn" type="submit" name="regtechbtn" value="Done">
                                     <label ><?php echo $message;?></label>
                                     
@@ -449,7 +454,7 @@ require_once('control.php');
                         <div class="cont-flip">
                             <div class="">
                                 <form method="POST" action="#regmn" class="contact-form">
-                                    <input type="text" required  class="single"name="minename" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Mina Name">
+                                    <input type="text" required class="single"name="minename" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Mina Name">
                                     <input class="donebtn" name="addminebtn" type="submit" value="Done">
                                     <?php echo $message;?>
                                 </form>
@@ -471,8 +476,8 @@ require_once('control.php');
                         <div class="cont-flip">
                             <div class="">
                                 <form method="POST" action="#regcp" class="contact-form">
-                                    <input type="text" class="gutter" required name="cpname" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Check Point Name">
-                                    <input type="text" class="gutter" required name="sitename" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Site Name">
+                                    <input type="text" required class="gutter" name="cpname" pattern="(?=.*[aA-zZ]).{2,}" title="2 or more characters" class="gutter" placeholder="Check Point Name">
+                                    <select required name="cpsites" class="gutter" > <?php echo $CP_site; ?> </select>
                                     <input class="donebtn" name="addcpbtn" type="submit" value="Done">
                                     <?php echo $message;?>
                                 </form>
@@ -537,9 +542,23 @@ require_once('control.php');
             }
            
             }
+			
+			/*PRINTER CODER*/
 
-
+			function PRINTING(modal_print){
+				 var divToPrint = document.getElementById(modal_print);
+				 newWin = window.open("");
+				 newWin.document.write(divToPrint.outerHTML);
+				 newWin.print();
+				 newWin.close();
+			}
             
+            $('.con_password').blur(function(){ 
+					if($('.password').val() != $('.con_password').val()){ 
+						$('.con_password').css("border","2px red solid").effect("pulsate",{times:2},800);
+						$('.password').css("border","2px red solid").effect("pulsate",{times:2},800); 
+					} 
+			});
         </script>
     </body>
 
