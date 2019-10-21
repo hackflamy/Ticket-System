@@ -335,7 +335,7 @@ $re_uers .= "</tbody>";
 /* Code.
      this code accurately designate the chosen  user's infor to be edited.*/
 if(isset($_REQUEST['usereditbtn'])){
-    echo "it did go through==>".$_REQUEST['useredit'];
+   
     $user->INITIALIZE_USER($_REQUEST['useredit'],$con);
 	$_SESSION["Previous_name"] = $user->NAME();
     $edt_user = '<form method="POST" action="#edituser" class="contact-form">

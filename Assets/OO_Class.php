@@ -774,7 +774,6 @@
 				$this->T_no = $col[0];
 				 $this->D_T = $col[8]." ".$col[7]; 
 			 } 
-			 echo "INITIALIZE wasn't successful.";
 		 //} 
 	}
 

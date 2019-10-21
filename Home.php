@@ -118,8 +118,12 @@ require_once('control.php');
         <!-- logo-->
 
         <!-- welcome-->
+
         <div class="welcome">
             <h1> Welcome To <br><span class="spn">Burgh Group Holdings</span><br> <h2>Ticket System<h2></h1>
+ 
+        </div>
+        <div class="welcomedesc"  >
             <div class="tagline">
                 <p>This System is used to keep ticket that <br>were issued to technician after ateednding an issue</p>
 
@@ -127,13 +131,12 @@ require_once('control.php');
             <div class="down">
              <a href="#Deshboard"><i class="fa fa-chevron-circle-down fa-lg"></i></a>
             </div>
-        </div>
+        </div>        
         <!-- welcome-->
 
         <div class="modal" id="Deshboard">
             <div class="modal-content">
-                <div class="contentholder">
-                    <a href="#" class="modal-close">&times;</a>
+            <a href="#" class="modal-close">&times;</a>     
                     <p class="modal-body">
                         <h2 class="table-heading">Dashboard</h2>
                         <form method="POST" action="#Deshboard" >
@@ -161,7 +164,7 @@ require_once('control.php');
                                 <?php echo $filterdata;?>
                         </table>
                     </p>
-                </div>
+                
             </div>
         </div>
 
@@ -169,7 +172,6 @@ require_once('control.php');
         <form method="POST" action="#view" >
             <div class="modal" id="view">
                 <div class="modal-content">
-                    <div class="contentholder">
                         <a href="#" class="modal-close">&times;</a>
                         <p class="modal-body">
                             <h2 class="table-heading">All Tickets</h2>
@@ -195,7 +197,6 @@ require_once('control.php');
                             
                             </table>
                         </p>
-                    </div>
                 </div>
             </div>
         </form>
@@ -250,7 +251,6 @@ require_once('control.php');
         <form method="POST" action="#opentick" >
             <div class="modal" id="opentick">
                 <div class="modal-content">
-                    <div class="contentholder">
                         <a href="#" class="modal-close">&times;</a>
                         <p class="modal-body">
                         <h2 class="table-heading">Open Tickets</h2>
@@ -259,7 +259,6 @@ require_once('control.php');
                             <input class="searchbtn" name="searchopenbtn"type="submit" value="Search">
                             <button class="printbtn" onclick="PRINTING('Table_tickets')"></button>
                         </div>
-
                         <table class="tickets" id="Table_view">
                             <tr>
                             <th>Ticket Number</th>
@@ -277,7 +276,6 @@ require_once('control.php');
                         </table>
                     </p>
                 </div>
-                </div>
             </div>
         </form>
         <!-- open ticket ends-->
@@ -286,7 +284,6 @@ require_once('control.php');
         <form method="POST" action="#closetick" >
             <div class="modal" id="closetick">
                 <div class="modal-content">
-                    <div class="contentholder">
                         <a href="#" class="modal-close">&times;</a>
                         <p class="modal-body">
                             <h2 class="table-heading">Closed Tickets</h2>
@@ -310,7 +307,6 @@ require_once('control.php');
                             <?php echo $filtclosedtick;?>
                             </table>
                         </p>
-                    </div>
                 </div>
             </div>
         </form>
@@ -320,7 +316,6 @@ require_once('control.php');
    
             <div class="modal" id="modal">
                 <div class="modal-content">
-                    <div class="contentholder">
                         <a href="#" class="modal-close">&times;</a>
                         <p class="modal-body">
                             <h2 class="table-heading">Available Tickets</h2>
@@ -340,20 +335,23 @@ require_once('control.php');
                             <?php echo $re_ticket; ?> 
                             </table>
                         </p>
-                    </div>
                 </div>
             </div>
                     
             <div class="modal" id="updateTicket">
                 <div class="modal-content">
-                    <div class="contentholder">
-                            <a href="#" class="modal-close">&times;</a>
-                            <p class="modal-body">
-                                <h2 class="table-heading">Alter Tickets</h2>
-                                <?php echo $edt_t; ?> 
-                                <p id="validationp" class="lbldanger"></p>
-                                </p>
-                    </div>
+                        <a href="#" class="modal-close">&times;</a>
+                        <p class="modal-body">
+                            <h2 class="table-heading">Alter Tickets</h2>
+                            <div class="cont-contactbtn">
+                                <div class="cont-flip">
+                                    <div class="">
+                                        <?php echo $edt_t; ?> 
+                                        <p id="validationp" class="lbldanger"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </p>
                 </div>
             </div>
        
