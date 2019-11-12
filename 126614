@@ -1,0 +1,309 @@
+-- phpMyAdmin SQL Dump
+-- version 4.9.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Nov 12, 2019 at 07:42 AM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.3.10
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `ticketsystem`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_cp`
+--
+
+CREATE TABLE `tbl_cp` (
+  `cp_id` varchar(10) NOT NULL,
+  `cp_name` varchar(100) NOT NULL,
+  `site_id` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_cp`
+--
+
+INSERT INTO `tbl_cp` (`cp_id`, `cp_name`, `site_id`) VALUES
+('BLse2001', 'security exit', 'BLE995331'),
+('BLSE7816', 'SECONDARY IN', 'BLA792376'),
+('BLSE8416', 'SECURITY EXIT', 'BLA792376'),
+('BLWE1657', 'WEIGHBRIDGE OFFICE', 'BLA792376'),
+('BLWE5081', 'WEIGHBRIDGE IN', 'BLA792376'),
+('BLWE894', 'WEIGHBRIDGE IN', 'BLE995331'),
+('BLWE9186', 'WEIGHBRIDGE OUT', 'BLE995331'),
+('BLWE9221', 'WEIGHBRIDGE OUT', 'BLA792376'),
+('INGU9450', 'GUARD HOUSE', 'INY469842'),
+('INPL4830', 'PLANT CHECKPOINT NO 2', 'INY469842'),
+('INPL5527', 'PLANT CHECKPOINT NO 1', 'INY469842'),
+('INSE7252', 'SECURITY EXIT', 'INY469842'),
+('INSE8511', 'SECONDARY IN', 'INY469842'),
+('INWE4684', 'WEIGHBRIDGE OUT', 'INY469842'),
+('INWE8916', 'WEIGHBRIDGE OFFICE', 'INY469842'),
+('INWE9087', 'WEIGHBRIDGE IN', 'INY469842'),
+('KLGU466', 'GUARD HOUSE', 'KLI410739'),
+('KLSE4143', 'SECURITY EXIT', 'KLI410739'),
+('KLSE5982', 'SECONDARY IN', 'KLI410739'),
+('KLWE2220', 'WEIGHBRIDGE OUT', 'KLI410739'),
+('KLWE2915', 'WEIGHBRIDGE OFFICE', 'KLI410739'),
+('KLWE8297', 'WEIGHBRIDGE IN', 'KLI410739'),
+('MOMA462', 'MANUAL BOOM GATE', 'MOO106134'),
+('MOSE5054', 'SECURITY EXIT NO 1', 'MOO106134'),
+('MOSE8102', 'SECURITY EXIT NO 2', 'MOO106134'),
+('MOSE8721', 'SECONDARY IN NO 2', 'MOO106134'),
+('MOSE9108', 'SECONDARY IN NO 1', 'MOO106134'),
+('MOWE2255', 'WEIGHBRIDGE OFFICE', 'MOO106134'),
+('MOWE2719', 'WEIGHBRIDGE IN NO 1', 'MOO106134'),
+('MOWE2940', 'WEIGHBRIDGE OUT NO 1', 'MOO106134'),
+('MOWE6060', 'WEIGHBRIDGE OUT NO 2', 'MOO106134'),
+('MOWE7210', 'WEIGHBRIDGE IN NO 2', 'MOO106134'),
+('OTHER_1', 'OTHER', 'BLA792376'),
+('TNGU3823', 'GUARD HOUSE', 'TND481351'),
+('TNSE5859', 'SECONDARY IN', 'TND481351'),
+('TNSE9256', 'SECURITY EXIT', 'TND481351'),
+('TNWE8264', 'WEIGHBRIDGE OUT', 'TND481351'),
+('TNWE8907', 'WEIGHBRIDGE IN', 'TND481351'),
+('TNWE9388', 'WEIGHBRIDGE OFFICE', 'TND481351'),
+('WEGU8119', 'GUARD HOUSE', 'WEL209774'),
+('WEMA4407', 'MANUAL BOOM', 'WEL209774'),
+('WESE5624', 'SECONDARY IN', 'WEL209774'),
+('WESE9983', 'SECURITY EXIT', 'WEL209774'),
+('WEWE1806', 'WEIGHBRIDGE OUT', 'WEL209774'),
+('WEWE3207', 'WEIGHBRIDGE OFFICE', 'WEL209774'),
+('WEWE3507', 'WEIGHBRIDGE IN', 'WEL209774');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_site`
+--
+
+CREATE TABLE `tbl_site` (
+  `site_id` varchar(10) NOT NULL,
+  `site_name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_site`
+--
+
+INSERT INTO `tbl_site` (`site_id`, `site_name`) VALUES
+('BLA792376', 'BLACKHILL'),
+('BLE995331', 'BLESBOK'),
+('INY469842', 'INYANDA'),
+('KLI410739', 'KLIPFONTEIN'),
+('MOO106134', 'MOOIFONTEIN'),
+('TND481351', 'TNDB'),
+('WEL209774', 'WELGELEGEN');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_tech`
+--
+
+CREATE TABLE `tbl_tech` (
+  `tech_id` varchar(10) NOT NULL,
+  `tech_name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_tech`
+--
+
+INSERT INTO `tbl_tech` (`tech_id`, `tech_name`) VALUES
+('Ash268', 'Ashley'),
+('Ben439', 'Benny'),
+('Bra256', 'Brains'),
+('cha394', 'Charel'),
+('don54', 'Donovan'),
+('Hen8103', 'Henry'),
+('lua589', 'Luan'),
+('Nel355', 'Nelson'),
+('ref90', 'Refiloe'),
+('ria95', 'Rian'),
+('Ten21', 'Tendani'),
+('UNI5498', 'Unity');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_ticket`
+--
+
+CREATE TABLE `tbl_ticket` (
+  `ticket_no` varchar(10) NOT NULL,
+  `site` varchar(50) NOT NULL,
+  `check_point` varchar(50) NOT NULL,
+  `problem` text NOT NULL,
+  `technician` varchar(10) NOT NULL,
+  `cro` varchar(50) NOT NULL,
+  `solution` varchar(1000) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `accessibility` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_ticket`
+--
+
+INSERT INTO `tbl_ticket` (`ticket_no`, `site`, `check_point`, `problem`, `technician`, `cro`, `solution`, `date`, `time`, `accessibility`) VALUES
+('#8268', 'Inyanda', 'WB OUT', 'printer not working', 'Benny', 'CP', '', '2019-07-27', '00:00:00', 'closed'),
+('#8269', 'Kleinfontein', 'secondary IN', 'boom gate standing open', 'Ashley', 'SD', '', '2019-07-27', '00:00:00', 'closed'),
+('#8270', 'TNDB', 'EXIT LANE', 'boom gate standing open', 'Benny', 'em', '', '2019-07-27', '00:00:00', 'closed'),
+('#8271', 'Kleinfontein', 'WB-OUT', 'rinter is jammed', 'Benny', 'EM', '', '2019-07-27', '00:00:00', 'closed'),
+('#8272', 'Klipfontein', 'WB OUT', 'Printer is ofline ', 'Charel', 'EM', '', '2019-07-27', '00:00:00', 'open'),
+('#8447', 'WELGELEGEN', 'EXIT', 'Exitn was damaged ', 'Ashley', 'L', '', '2019-10-21', '14:54:00', 'OPEN'),
+('#8448', 'MOOIFONTEIN', 'weighbridge in', 'WAS is not responding', 'Luan', 'MR', '', '0000-00-00', '05:04:47', 'OPEN'),
+('#8449', 'BLACKHILL', 'weighbridge in', 'Paper jam at WB OUT', 'Ashley', 'MR', '', '0000-00-00', '05:56:34', 'OPEN'),
+('#8450', 'TNDB', 'WB OUT', 'WB out printer at tndb with a newly serviced', 'Brains', 'R', '', '0000-00-00', '08:17:29', 'OPEN'),
+('#8451', 'WELGELEGEN', 'WB OUT', 'Serviced printer at welgelegen out wb', 'Ashley', 'R', '', '0000-00-00', '09:19:12', 'OPEN'),
+('#8452', 'INYANDA', 'WB OUT', 'replaced WB out printer at inyanda with a newly serviced unit ( old)', 'Brains', 'R', '', '0000-00-00', '10:12:42', 'OPEN'),
+('#8453', 'MOOIFONTEIN', 'WB OUT', 'reverb printer on wb ou 2 mfnt', 'Charel', 'R', '', '0000-00-00', '10:17:05', 'OPEN'),
+('#8454', 'WELGELEGEN', 'Site', 'support site as it was raining', 'Tendani', 'L', '', '0000-00-00', '18:06:24', 'OPEN'),
+('#8455', 'INYANDA', 'WB OUT', 'Printer installed', 'Ashly', 'L', '', '0000-00-00', '19:39:03', 'OPEN'),
+('#8456', 'MOOIFONTEIN', 'WB OUT', 'WB OUT 1 has a paper jam SD', 'Luan', 'SD', '', '0000-00-00', '04:50:32', 'OPEN'),
+('#8457', 'BLACKHILL', 'WB OUT', 'Printer back online', 'Ashly', 'L', '', '0000-00-00', '06:25:15', 'OPEN'),
+('#8458', 'MOOIFONTEIN', 'WB OUT', 'new reverb printer on out wb 1', 'Charel', 'R', '', '0000-00-00', '09:43:52', 'OPEN'),
+('#8459', 'KLIPFONTEIN', 'WB OUT', 'refurb printer', 'Tendani', 'R', '', '0000-00-00', '09:54:02', 'OPEN'),
+('#8460', 'BLACKHILL', 'WB OUT', 'Refurbished printer', 'Benny', 'L', '', '0000-00-00', '12:47:40', 'OPEN'),
+('#8461', 'BLACKHILL', 'SECURITY EXIT', 'boom gate standing open. damaged link', 'Ashley', 'KD', '', '0000-00-00', '19:34:16', 'OPEN'),
+('#8462', 'WELGELEGEN', 'SECONDARY IN', 'replacing secondary in coupler', 'Ashley', 'R', '', '0000-00-00', '09:28:20', 'OPEN'),
+('#8463', 'weighbridge in', 'INYANDA', 'PAPER JAM AT WELGELEGEN WEIGHBRIDGE OUT', 'Rian', 'R', 'PAPER JAM SOLVED', '0000-00-00', '21:13:45', 'CLOSE'),
+('#8464', 'WELGELEGEN', 'SECONDARY IN', 'welgelegen secondary in boom gate not triggerring', 'Ashley', 'KD', '', '0000-00-00', '04:17:33', 'OPEN'),
+('#8465', 'WELGELEGEN', 'SECURITY EXIT', 'Boom gate was standing open', 'Ashley', '', 'boom gate was closed', '2019-10-26', '22:33:53', 'CLOSE'),
+('#8466', 'WELGELEGEN', 'SECONDARY IN', 'Wass device not displaying, and boom gate nt triggering correctly', 'Ashley', 'KD', '', '2019-10-27', '04:32:45', 'OPEN'),
+('#8467', 'MOOIFONTEIN', 'WEIGHBRIDGE OUT NO 1', 'The Weighbridge out printer is not working and the sensor is not capturing when they sacn', 'Luan', 'MH', '', '2019-10-27', '07:40:16', 'OPEN'),
+('#8468', 'TNDB', 'SECONDARY IN', 'net work adapter damage and PC replacement', 'Ashley', 'CP', 'hospital PC was used', '2019-10-27', '11:18:09', 'CLOSED'),
+('#8469', 'WEIGHBRIDGE OUT', 'BLACKHILL', 'change of new roll', 'Ashley', 'CP', 'tech installed new roll', '2019-10-27', '17:53:39', 'CLOSE'),
+('#8470', 'INYANDA', 'WEIGHBRIDGE OUT', 'Printer out of paper', 'Ashley', 'SD', 'New roll installed', '2019-10-27', '19:09:36', 'CLOSED'),
+('#8471', 'KLIPFONTEIN', 'GUARD HOUSE', 'G. house scanner was offline SD', 'Tendani', 'SD', '', '2019-10-28', '11:59:23', 'OPEN'),
+('#8472', 'INYANDA', 'WEIGHBRIDGE OUT', 'Printer is offline SD', 'Tendani', 'SD', '', '2019-10-29', '20:18:31', 'OPEN'),
+('#8473', 'BLACKHILL', 'SECURITY EXIT', 'centurion controller,cause the boom to open and close randomly.', 'Tendani', '', 'replace centurion controller.', '2019-10-30', '08:39:04', 'CLOSED'),
+('#8474', 'WELGELEGEN', 'MANUAL BOOM', 'Charging unit faulty', 'Tendani', 'CP', 'charging unit replaced', '2019-10-31', '11:47:37', 'CLOSED'),
+('#8475', 'TNDB', 'SECURITY EXIT', 'replacing an exit cp WASS device.', 'Benny', 'TF', 'changed the WASS', '2019-11-01', '11:41:12', 'CLOSED'),
+('#8476', 'SECONDARY IN', 'WELGELEGEN', 'Secondary pc is off', 'Tendani', 'MR', 'db-box was tripped', '2019-11-01', '22:46:33', 'CLOSE'),
+('#8477', 'INYANDA', 'GUARD HOUSE', 'WB IN Wass was off', 'Refiloe', 'KD', 'was was switched on', '2019-11-02', '04:15:20', 'CLOSED'),
+('#8478', 'INYANDA', 'WEIGHBRIDGE OUT', 'Printer is offline SD', 'Refiloe', 'SD', '', '2019-11-02', '08:59:37', 'OPEN'),
+('#8479', 'BLACKHILL', 'SECURITY EXIT', 'Boom gate malfunction', 'Tendani', 'lv', '', '2019-11-02', '13:15:02', 'OPEN'),
+('#8480', 'BLACKHILL', 'SECURITY EXIT', 'Boom gate malfunctioning', 'Tendani', 'SD', '', '2019-11-03', '08:57:22', 'OPEN'),
+('#8481', 'SECURITY EXIT', 'BLACKHILL', 'Boom gate is standing halve open, and doesnt want to close or fully open for trucks, So security have been open it manually for trucks.', 'Tendani', 'EM', 'adjusted adjustment links spring tension and changed holding force on controller', '2019-11-03', '14:50:15', 'CLOSE'),
+('#8482', 'WELGELEGEN', 'MANUAL BOOM', 'Boom Gates replaced', 'Tendani', 'lv', '', '2019-11-04', '13:58:48', 'OPEN'),
+('#8483', 'KLIPFONTEIN', 'GUARD HOUSE', 'Moving TT equipment because of rain', 'Brains', 'CP', 'TT equipment moved to Mine manager Office', '2019-11-05', '09:00:12', 'CLOSED'),
+('#8484', 'WELGELEGEN', 'MANUAL BOOM', 'Manual boom hit by truck', 'Tendani', 'SD', 'Manual boom replaced', '2019-11-07', '10:31:33', 'CLOSED'),
+('#8485', 'BLACKHILL', 'SECURITY EXIT', 'Boom was standing open', 'Ashley', 'MR', 'boom was having max collusion', '2019-11-08', '06:00:51', 'CLOSED'),
+('#8486', 'INYANDA', 'WEIGHBRIDGE IN', 'The PC crash.', 'Benny', 'LL', 'The PC was restarted and is now functioning.', '2019-11-08', '19:44:15', 'CLOSED'),
+('#8487', 'MOOIFONTEIN', 'MANUAL BOOM GATE', 'Mooifontein exit it is not responding when they scan.MH', 'Unity', 'MH', '', '2019-11-09', '06:41:31', 'OPEN'),
+('#8488', 'BLACKHILL', 'SECURITY EXIT', 'Exit is standing open', 'Benny', 'CP', '', '2019-11-09', '08:05:50', 'OPEN'),
+('#8489', 'BLACKHILL', 'SECURITY EXIT', 'Exit Boomgate not opening', 'Unity', 'CP', 'adjusted holding force', '2019-11-09', '12:55:47', 'CLOSED'),
+('#8490', 'WELGELEGEN', 'GUARD HOUSE', 'connection lost to all security CPs, power is confimed to be be on point', 'Brains', 'KD', '', '2019-11-10', '03:47:44', 'OPEN'),
+('#8491', 'MOOIFONTEIN', 'WEIGHBRIDGE OUT NO 1', 'Printer paper jam', 'Luan', 'SD', '', '2019-11-10', '07:18:33', 'OPEN'),
+('#8492', 'WELGELEGEN', 'WEIGHBRIDGE OUT', 'Printer offline', 'Luan', 'SD', '', '2019-11-10', '09:18:18', 'OPEN'),
+('#8493', 'MOOIFONTEIN', 'WEIGHBRIDGE IN NO 1', 'WB IN BOOM GATE BUMPED BY TRUCK, BOOM GATE IS LOOSE AND NOT RESPONDING KD', 'Luan', 'KD', '', '2019-11-10', '15:07:48', 'OPEN'),
+('#8494', 'BLACKHILL', 'WEIGHBRIDGE OUT', 'The Weighbridge out and Exit boom gate was hit by truck fallen down.', 'Ashley', 'MH', 'Tech took the exit boom to replace the Weighbridge out boom', '2019-11-10', '20:00:40', 'CLOSED'),
+('#8495', 'MOOIFONTEIN', 'WEIGHBRIDGE OUT NO 2', 'The weighbridge out printer is offline, the secondary in is not responding.', 'Unity', 'MH', 'The WB out 2 printer is not fixed they will have to be swap out, secondary in boom gate is left standing the pc disconnected until the power fixed.', '2019-11-10', '20:37:56', 'CLOSED'),
+('#8496', 'MOOIFONTEIN', 'WEIGHBRIDGE OUT NO 1', 'PRINTER AT WB OUT 1 AND SECURITY ARE DOWN WILL USE ONE TICKET FOR BOTH MATTERS', 'Luan', 'ElS', '', '2019-11-11', '04:32:56', 'OPEN'),
+('#8497', 'BLACKHILL', 'OTHER', 'The interlocking boom gate was remove.', 'Tendani', 'LL', 'The interlocking boom gate mounted.', '2019-11-11', '08:13:13', 'CLOSED'),
+('#8498', 'BLACKHILL', 'SECONDARY IN', 'The issue was the  sensors died.', 'Tendani', 'EM', 'new wireless sensors installed and a make shift clamp/bracket', '2019-11-11', '10:23:49', 'CLOSED'),
+('#8499', 'INYANDA', 'SECURITY EXIT', 'Exit CP at Inyanda is damaged by the wind N its now too short to be cut off.and coupler was changed', 'Brains', 'TF', 'New arm installed', '2019-11-11', '11:23:33', 'CLOSED'),
+('#8500', 'BLACKHILL', 'SECONDARY IN', 'new wireless sensors installed', 'Tendani', 'LL', '', '2019-11-11', '16:57:03', 'OPEN'),
+('#8501', 'BLACKHILL', 'SECONDARY IN', 'Pc lost connection', 'Rian', 'LL', '', '2019-11-11', '16:59:30', 'OPEN');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_user`
+--
+
+CREATE TABLE `tbl_user` (
+  `username` varchar(50) NOT NULL,
+  `initials` char(4) NOT NULL,
+  `surname` varchar(50) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `role` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_user`
+--
+
+INSERT INTO `tbl_user` (`username`, `initials`, `surname`, `password`, `role`) VALUES
+('champ', 'CP', 'Dlamini', 'champ', 'admin'),
+('champion@BGH', 'CP', 'DLAMINI', 'champion@CRO', 'CRO'),
+('DAPHNEY@BGH', 'MD', 'DAPHNEY', 'DAPHNEY@CRO', 'CRO'),
+('DUNCAN@BGH', 'KD', 'DUNCAN', 'DUNCAN@CRO', 'CRO'),
+('elias@BGH', 'EM', 'Elias', 'elias@CRO', 'CRO'),
+('herbert@bgh', 'MH', 'MAMARO', 'Herbert1!', 'CRO'),
+('Lourence@BGH', 'LL', 'Ntsoane', 'Lourence@CRO', 'CRO'),
+('luthando@BGH', 'lv', 'valiphathwa', 'LUTHANDO@CRO', 'CRO'),
+('raymond@BGH', 'MR', 'Raymond', 'raymond@BGH', 'CRO'),
+('REBOO@BGH', 'R', 'REBOTILE', 'REBO@CRO', 'CRO'),
+('suprise@cro', 'SD', 'Malepe', 'suprise@CRO', 'CRO'),
+('Tumi@BGH', 'TF', 'Rathelele', 'Tumi@CRO', 'CRO'),
+('TYLER@BGH', 'ElS', 'Tyler', 'TYLER@CRO', 'CRO'),
+('ZANDER@BGH', 'ZZ', 'ZANDER', 'ZANDER@CRO', 'CRO');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tbl_cp`
+--
+ALTER TABLE `tbl_cp`
+  ADD PRIMARY KEY (`cp_id`),
+  ADD KEY `fkcp` (`site_id`);
+
+--
+-- Indexes for table `tbl_site`
+--
+ALTER TABLE `tbl_site`
+  ADD PRIMARY KEY (`site_id`);
+
+--
+-- Indexes for table `tbl_tech`
+--
+ALTER TABLE `tbl_tech`
+  ADD PRIMARY KEY (`tech_id`);
+
+--
+-- Indexes for table `tbl_ticket`
+--
+ALTER TABLE `tbl_ticket`
+  ADD PRIMARY KEY (`ticket_no`);
+
+--
+-- Indexes for table `tbl_user`
+--
+ALTER TABLE `tbl_user`
+  ADD PRIMARY KEY (`username`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tbl_cp`
+--
+ALTER TABLE `tbl_cp`
+  ADD CONSTRAINT `fkcp` FOREIGN KEY (`site_id`) REFERENCES `tbl_site` (`site_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
